@@ -1,10 +1,10 @@
 import { Repository } from "typeorm"
-import { ICar } from "../../interfaces/cars.interfaces"
+import { ICar, ICarRepo } from "../../interfaces/cars.interfaces"
 import { Car } from "../../entities"
 import { AppDataSource } from "../../data-source"
 
 const listCarsService = async (): Promise<ICar[]> => {
-    const carRepository: Repository<Car> = AppDataSource.getRepository(Car);
+    const carRepository: ICarRepo = AppDataSource.getRepository(Car)
     
     const cars = await carRepository.createQueryBuilder('car')
     .leftJoinAndSelect('car.user', 'user')

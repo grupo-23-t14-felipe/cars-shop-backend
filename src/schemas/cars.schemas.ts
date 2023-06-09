@@ -1,6 +1,7 @@
 import { z } from 'zod';
+import { fuelType } from '../entities/cars.entity';
 
-const FuelType = z.enum(['hybrid', 'diesel', 'electric']);
+const FuelType = z.enum([fuelType.DIESEL, fuelType.ELECTRIC, fuelType.HYBRID]);
 
 const CarSchema = z.object({
   uuid: z.string().uuid(),
@@ -13,11 +14,25 @@ const CarSchema = z.object({
   is_good_deal: z.boolean(),
   value: z.number().positive(),
   description: z.string(),
+  // Quando tiver os schemas de cada Entidades, adiciona-los abaixo.
   user: z.object({}),
   comments: z.array(z.object({})), 
   galleries: z.array(z.object({})) 
 })
 
+const CarCreateSchema = CarSchema.omit({
+  uuid: true,
+  user: true,
+  comments: true,
+  galleries: true,
+})
+
+const CarCreateRequestSchema = CarCreateSchema.omit({
+  is_good_deal: true,
+}).extend({
+  fipe_price: z.number()
+})
 
 
-export { CarSchema }
+
+export { CarSchema, CarCreateRequestSchema, CarCreateSchema }
