@@ -41,7 +41,7 @@ export class Car{
     @Column({type: 'text'})
     description: string
 
-    @ManyToOne(() => User, (users) => users.cars)
+    @ManyToOne(() => User, (user) => user.cars)
     user: User
 
     @OneToMany(() => Comment, (comment) => comment.car)
