@@ -9,7 +9,7 @@ export const createCarService = async (payload: ICarCreateRequest, userUUID: str
     const userRepository: IUserRepo = AppDataSource.getRepository(User)
 
     const newCarInfo: ICarCreate = {...payload, is_good_deal: false}
-    if(payload.value / payload.fipe_price <= 0,95){
+    if(payload.value / payload.fipe_price <= 0.95){
         newCarInfo.is_good_deal = true
     }
 

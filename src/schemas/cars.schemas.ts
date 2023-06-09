@@ -33,6 +33,8 @@ const CarCreateRequestSchema = CarCreateSchema.omit({
   fipe_price: z.number()
 })
 
+const CarUpdateRequestSchema = CarCreateRequestSchema.partial()
 
 
-export { CarSchema, CarCreateRequestSchema, CarCreateSchema }
+
+export { CarSchema, CarCreateRequestSchema, CarCreateSchema, CarUpdateRequestSchema }
