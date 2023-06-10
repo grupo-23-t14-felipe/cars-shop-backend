@@ -4,7 +4,7 @@ import { fuelType } from "../../entities/cars.entity";
 import { ICar, ICarCreate, ICarCreateRequest, ICarRepo } from "../../interfaces/cars.interfaces";
 import { IUserRepo } from "../../interfaces/user.interface";
 
-export const createCarService = async (payload: ICarCreateRequest, userUUID: string): Promise<Car> => {
+export const createCarService = async (payload: ICarCreateRequest, userUUID: string) => {
     const carRepository: ICarRepo = AppDataSource.getRepository(Car)
     const userRepository: IUserRepo = AppDataSource.getRepository(User)
 
@@ -16,7 +16,7 @@ export const createCarService = async (payload: ICarCreateRequest, userUUID: str
     const logedUser: User | null = await userRepository.findOneBy({uuid: userUUID})
     
 
-    const createdCar: ICar = carRepository.create({...newCarInfo, user: logedUser!})
+    const createdCar = carRepository.create({...newCarInfo, user: logedUser!})
     await carRepository.save(createdCar)
 
     return createdCar

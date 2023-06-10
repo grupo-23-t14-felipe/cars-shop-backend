@@ -1,7 +1,7 @@
 
 import { z } from "zod";
 import { CarSchema } from "./cars.schemas";
-import { AddressCreateSchema, AddressSchema } from "./address.schemas";
+import { AddressCreateSchema } from "./address.schemas";
 
 const UserSchema = z.object({
   uuid: z.string(),
@@ -14,7 +14,7 @@ const UserSchema = z.object({
   description: z.string().nullable().optional(),
   imageUrl: z.string().nullable().optional(),
   is_seller: z.boolean().nullable().optional(),
-  address: z.string(),
+  address: z.string().optional(),
   cars: z.array(CarSchema).optional(),
   comments: z.array(
     z.object({})
@@ -37,5 +37,13 @@ const UserRelatedSchema = UserSchema.omit({
     cars: true,
     address: true
 })
+const UserLoginSchema = z.object({
+  email: z.string(),
+  password: z.string()
+})
+const UserLoginResponseSchema = z.object({
+  user: UserCreateResponseSchema,
+  token:z.string()
+})
 
-export { UserSchema, UserRelatedSchema,UserCreateRequestSchema, UserCreateResponseSchema };
+export { UserSchema,UserLoginResponseSchema, UserLoginSchema,UserRelatedSchema,UserCreateRequestSchema, UserCreateResponseSchema };

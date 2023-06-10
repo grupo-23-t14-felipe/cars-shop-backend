@@ -2,7 +2,7 @@ import { AppDataSource } from "../../data-source";
 import { Car } from "../../entities";
 import { ICarRepo, ICarUpdateRequest } from "../../interfaces/cars.interfaces";
 
-export const updateCarService = async (payload: ICarUpdateRequest, carUUID: string): Promise<Car> => {
+export const updateCarService = async (payload: ICarUpdateRequest, carUUID: string) => {
     const carRepository: ICarRepo = AppDataSource.getRepository(Car)
 
     const carToUpdate: Car|null = await carRepository.findOneBy({uuid: carUUID})
@@ -18,7 +18,7 @@ export const updateCarService = async (payload: ICarUpdateRequest, carUUID: stri
         updatedCarInfo.is_good_deal = false
     }
 
-    const updatedCar: Car = carRepository.create(updatedCarInfo)
+    const updatedCar = carRepository.create(updatedCarInfo)
     await carRepository.save(updatedCar)
 
     return updatedCar
