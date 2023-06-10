@@ -14,10 +14,9 @@ const CarSchema = z.object({
   is_good_deal: z.boolean(),
   value: z.number().positive(),
   description: z.string(),
-  // Quando tiver os schemas de cada Entidades, adiciona-los abaixo.
   user: z.object({}),
-  comments: z.array(z.object({})), 
-  galleries: z.array(z.object({})) 
+  comments: z.array(z.object({})).optional(), 
+  galleries: z.array(z.object({})).optional()
 })
 
 const CarCreateSchema = CarSchema.omit({
@@ -34,7 +33,5 @@ const CarCreateRequestSchema = CarCreateSchema.omit({
 })
 
 const CarUpdateRequestSchema = CarCreateRequestSchema.partial()
-
-
 
 export { CarSchema, CarCreateRequestSchema, CarCreateSchema, CarUpdateRequestSchema }

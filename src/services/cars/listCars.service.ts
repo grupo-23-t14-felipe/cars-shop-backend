@@ -1,4 +1,3 @@
-import { Repository } from "typeorm"
 import { ICar, ICarRepo } from "../../interfaces/cars.interfaces"
 import { Car } from "../../entities"
 import { AppDataSource } from "../../data-source"
