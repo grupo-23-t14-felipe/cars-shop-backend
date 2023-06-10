@@ -1,7 +1,8 @@
-import { Column, Entity, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { BeforeInsert, BeforeUpdate, Column, Entity, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Address } from "./address.entity";
 import { Car } from "./cars.entity";
 import { Comment } from "./comments.entity";
+import {hashSync, getRounds} from 'bcryptjs';
 
 @Entity('users')
 export class User{
@@ -45,4 +46,13 @@ export class User{
     @OneToMany(() => Comment, (comment) => comment.user)
     comments: Comment[]
 
+    @BeforeInsert()
+    @BeforeUpdate()
+    hashPassword(){
+        const isEncrypted = getRounds(this.password)
+        if(!isEncrypted){
+            this.password = hashSync(this.password, 10)
+        }
+    }
+    
 }
