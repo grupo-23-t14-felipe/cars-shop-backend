@@ -12,6 +12,7 @@ const CarSchema = z.object({
   mileage: z.number().int(),
   color: z.string().max(30),
   is_good_deal: z.boolean(),
+  is_active: z.boolean(),
   value: z.number().positive(),
   description: z.string(),
   user: z.object({}),

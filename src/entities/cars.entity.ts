@@ -35,6 +35,9 @@ export class Car{
     @Column({type: 'boolean'})
     is_good_deal: boolean
     
+    @Column({type: 'boolean'})
+    is_active: boolean
+    
     @Column({type: 'decimal', precision: 10, scale: 2})
     value: number
 
