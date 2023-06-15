@@ -1,12 +1,13 @@
-import { BeforeInsert, BeforeUpdate, Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { User } from "./user.entity";
 import { Comment } from "./comments.entity";
 import { Gallery } from "./galleries.entity";
 
 export enum fuelType{
     DIESEL = 'diesel',
-    HYBRID = 'hybrid',
-    ELECTRIC = 'electric'
+    ETANOL = 'etanol',
+    GASOLINA = 'gasolina',
+    FLEX = 'flex'
 }
 
 @Entity('cars')
