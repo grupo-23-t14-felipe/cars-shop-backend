@@ -19,12 +19,9 @@ const listCarsService = async (page: number, filters?: ListCarsFilters): Promise
   const carRepository: ICarRepo = AppDataSource.getRepository(Car)
 
   const itemsPerPage = 12
-  const offset = (page - 1) * itemsPerPage
+  const offset = Number((page - 1) * itemsPerPage)
 
   const queryBuilder = carRepository.createQueryBuilder('car')
-    .leftJoinAndSelect('car.user', 'user')
-    .leftJoinAndSelect('car.comments', 'comment')
-    .leftJoinAndSelect('car.galleries', 'gallery')
     .skip(offset)
     .take(itemsPerPage)
 

@@ -11,7 +11,8 @@ export const createCarController = async (req: Request, res: Response): Promise<
 
 export const listCarsController = async (req: Request, res:Response): Promise<Response> =>{
     const filters = req.query
-    const cars = await listCarsService(1,filters)
+    const page = Number(req.query.page) 
+    const cars = await listCarsService(page,filters)
     return res.status(200).json(cars)
 }
 
