@@ -1,6 +1,6 @@
-import { ICar, ICarRepo } from "../../interfaces/cars.interfaces"
-import { Car } from "../../entities"
-import { AppDataSource } from "../../data-source"
+import { ICar, ICarRepo } from "../../interfaces/cars.interfaces";
+import { Car } from "../../entities";
+import { AppDataSource } from "../../data-source";
 
 interface ListCarsFilters {
   fuelType?: string;
@@ -11,20 +11,28 @@ interface ListCarsFilters {
   brand?: string;
   valueMin?: number;
   valueMax?: number;
-  mileageMin?:number;
-  mileageMax?:number;
+  mileageMin?: number;
+  mileageMax?: number;
 }
 
-const listCarsService = async (page: number, filters?: ListCarsFilters): Promise<ICar[]> => {
-  const carRepository: ICarRepo = AppDataSource.getRepository(Car)
+const listCarsService = async (
+  page: number = 1,
+  filters?: ListCarsFilters
+): Promise<ICar[]> => {
+  const carRepository: ICarRepo = AppDataSource.getRepository(Car);
 
-  const itemsPerPage = 12
-  const offset = Number((page - 1) * itemsPerPage)
+  if (!page) page = 1;
 
-  const queryBuilder = carRepository.createQueryBuilder('car')
-    .where('car.isActive = :isActive', { isActive: true })
+  const itemsPerPage = 12;
+  const offset = (page - 1) * itemsPerPage;
+
+  console.log(offset);
+
+  const queryBuilder = carRepository
+    .createQueryBuilder("car")
+    .where("car.is_active = :is_active", { is_active: true })
     .skip(offset)
-    .take(itemsPerPage)
+    .take(itemsPerPage);
 
   if (filters) {
     const {
@@ -37,47 +45,44 @@ const listCarsService = async (page: number, filters?: ListCarsFilters): Promise
       valueMin,
       valueMax,
       mileageMin,
-      mileageMax
-    } = filters
+      mileageMax,
+    } = filters;
 
     if (fuelType) {
-      queryBuilder.andWhere('car.fuel_type = :fuelType', { fuelType })
+      queryBuilder.andWhere("car.fuel_type = :fuelType", { fuelType });
     }
     if (color) {
-      queryBuilder.andWhere('car.color = :color', { color })
+      queryBuilder.andWhere("car.color = :color", { color });
     }
     if (isGoodDeal !== undefined) {
-      queryBuilder.andWhere('car.is_good_deal = :isGoodDeal', { isGoodDeal })
+      queryBuilder.andWhere("car.is_good_deal = :isGoodDeal", { isGoodDeal });
     }
     if (year) {
-      queryBuilder.andWhere('car.year = :year', { year })
+      queryBuilder.andWhere("car.year = :year", { year });
     }
     if (model) {
-      queryBuilder.andWhere('car.model = :model', { model })
+      queryBuilder.andWhere("car.model = :model", { model });
     }
     if (brand) {
-      queryBuilder.andWhere('car.brand = :brand', { brand })
+      queryBuilder.andWhere("car.brand = :brand", { brand });
     }
     if (valueMin !== undefined) {
-      queryBuilder.andWhere('car.value >= :valueMin', { valueMin })
+      queryBuilder.andWhere("car.value >= :valueMin", { valueMin });
     }
     if (valueMax !== undefined) {
-      queryBuilder.andWhere('car.value <= :valueMax', { valueMax })
+      queryBuilder.andWhere("car.value <= :valueMax", { valueMax });
     }
     if (mileageMin !== undefined) {
-        queryBuilder.andWhere('car.mileage >= :mileageMin', { mileageMin })
-      }
+      queryBuilder.andWhere("car.mileage >= :mileageMin", { mileageMin });
+    }
     if (mileageMax !== undefined) {
-        queryBuilder.andWhere('car.mileage <= :mileageMax', { mileageMax })
+      queryBuilder.andWhere("car.mileage <= :mileageMax", { mileageMax });
     }
   }
 
-  const cars = await queryBuilder.getMany()
+  const cars = await queryBuilder.getMany();
 
-  return cars
-}
+  return cars;
+};
 
-export default listCarsService
-
-
-
+export default listCarsService;

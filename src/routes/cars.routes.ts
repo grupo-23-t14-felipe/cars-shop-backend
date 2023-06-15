@@ -1,7 +1,7 @@
 import { Router } from "express";
 import {
   createCarController,
-  listAllCarsController,
+  listCarsController,
   updateCarController,
   deleteCarController,
   listCarByUserIdController,
@@ -25,9 +25,10 @@ carsRouter.post(
   validateDataMdwr(CarCreateRequestSchema),
   createCarController
 );
-carsRouter.get("", listAllCarsController);
+carsRouter.get("", listCarsController);
 carsRouter.get(
   "/:userUUID",
+  verifyTokenIsValidMiddleware,
   ensureUserUuidExistsMdwr,
   listCarByUserIdController
 );
@@ -46,4 +47,3 @@ carsRouter.delete(
   ensureCarExistsMdwr,
   deleteCarController
 );
-
