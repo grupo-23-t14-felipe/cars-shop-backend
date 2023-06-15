@@ -4,10 +4,10 @@ import { Comment } from "./comments.entity";
 import { Gallery } from "./galleries.entity";
 
 export enum fuelType{
-    DIESEL = 'diesel',
-    ETANOL = 'etanol',
-    GASOLINA = 'gasolina',
-    FLEX = 'flex'
+    ETANOL = 1,
+    HYBRID = 2,
+    ELECTRIC = 3,
+    
 }
 
 @Entity('cars')
@@ -38,6 +38,9 @@ export class Car{
     
     @Column({type: 'boolean'})
     is_active: boolean
+
+    @Column({type: 'varchar'})
+    default_img: string;
     
     @Column({type: 'decimal', precision: 10, scale: 2})
     value: number

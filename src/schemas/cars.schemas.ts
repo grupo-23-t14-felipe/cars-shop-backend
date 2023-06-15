@@ -1,17 +1,18 @@
 import { z } from 'zod';
 import { fuelType } from '../entities/cars.entity';
 
-const FuelType = z.enum([fuelType.DIESEL, fuelType.ETANOL, fuelType.GASOLINA,fuelType.FLEX]);
+//const FuelType = z.enum([fuelType.ETANOL, fuelType.HYBRID, fuelType.ELECTRIC]);
 
 const CarSchema = z.object({
   uuid: z.string().uuid(),
   brand: z.string().max(20),
   model: z.string().max(40),
   year: z.number().int().min(1886).max(new Date().getFullYear()),
-  fuel_type: FuelType,
+  fuel_type: z.string(),
   mileage: z.number().int(),
   color: z.string().max(30),
   is_good_deal: z.boolean(),
+  default_img: z.string(),
   is_active: z.boolean(),
   value: z.number().positive(),
   description: z.string(),
