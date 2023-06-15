@@ -22,6 +22,7 @@ const listCarsService = async (page: number, filters?: ListCarsFilters): Promise
   const offset = Number((page - 1) * itemsPerPage)
 
   const queryBuilder = carRepository.createQueryBuilder('car')
+    .where('car.isActive = :isActive', { isActive: true })
     .skip(offset)
     .take(itemsPerPage)
 
