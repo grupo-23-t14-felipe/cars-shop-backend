@@ -1,5 +1,5 @@
-import { z } from 'zod';
-import { fuelType } from '../entities/cars.entity';
+import { z } from "zod";
+import { fuelType } from "../entities/cars.entity";
 
 const FuelType = z.enum([fuelType.flex, fuelType.hybrid, fuelType.eletric]);
 
@@ -16,23 +16,28 @@ const CarSchema = z.object({
   value: z.number().positive(),
   description: z.string(),
   user: z.object({}),
-  comments: z.array(z.object({})).optional(), 
-  galleries: z.array(z.object({})).optional()
-})
+  comments: z.array(z.object({})).optional(),
+  galleries: z.array(z.object({})).optional(),
+});
 
 const CarCreateSchema = CarSchema.omit({
   uuid: true,
   user: true,
   comments: true,
   galleries: true,
-})
+});
 
 const CarCreateRequestSchema = CarCreateSchema.omit({
   is_good_deal: true,
 }).extend({
-  fipe_price: z.number()
-})
+  fipe_price: z.number(),
+});
 
-const CarUpdateRequestSchema = CarCreateRequestSchema.partial()
+const CarUpdateRequestSchema = CarCreateRequestSchema.partial();
 
-export { CarSchema, CarCreateRequestSchema, CarCreateSchema, CarUpdateRequestSchema }
+export {
+  CarSchema,
+  CarCreateRequestSchema,
+  CarCreateSchema,
+  CarUpdateRequestSchema,
+};
