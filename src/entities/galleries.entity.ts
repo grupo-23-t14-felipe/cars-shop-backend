@@ -1,15 +1,20 @@
-import { Column, Entity, ManyToMany, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import {
+  Column,
+  Entity,
+  ManyToMany,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from "typeorm";
 import { Car } from "./cars.entity";
 
-@Entity('galleries')
-export class Gallery{
-    @PrimaryGeneratedColumn('uuid')
-    uuid: string
+@Entity("galleries")
+export class Gallery {
+  @PrimaryGeneratedColumn("uuid")
+  uuid: string;
 
-    @Column({type: 'text', nullable: true})
-    imageUrl: string | null | undefined
+  @Column({ type: "text", nullable: true })
+  imageUrl: string | null | undefined;
 
-    @ManyToOne(() => Car, (car) => car.galleries)
-    car: Car
-
+  @ManyToOne(() => Car, (car) => car.gallery)
+  car: Car;
 }

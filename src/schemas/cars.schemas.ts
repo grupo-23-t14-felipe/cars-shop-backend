@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { fuelType } from "../entities/cars.entity";
+import { gallerySchema } from "./gallery.schemas";
 
 const FuelType = z.enum([fuelType.flex, fuelType.hybrid, fuelType.eletric]);
 
@@ -16,15 +17,21 @@ const CarSchema = z.object({
   value: z.number().positive(),
   description: z.string(),
   user: z.object({}),
+  img_default: z.string(),
   comments: z.array(z.object({})).optional(),
-  galleries: z.array(z.object({})).optional(),
+  gallery: z.array(z.string()),
+});
+
+const CarReturnSchema = CarSchema.omit({
+  gallery: true,
+}).extend({
+  gallery: z.array(gallerySchema.required()),
 });
 
 const CarCreateSchema = CarSchema.omit({
   uuid: true,
   user: true,
   comments: true,
-  galleries: true,
 });
 
 const CarCreateRequestSchema = CarCreateSchema.omit({
@@ -33,11 +40,17 @@ const CarCreateRequestSchema = CarCreateSchema.omit({
   fipe_price: z.number(),
 });
 
+const CarCreateRequestWithotGallerySchema = CarCreateSchema.omit({
+  gallery: true,
+});
+
 const CarUpdateRequestSchema = CarCreateRequestSchema.partial();
 
 export {
   CarSchema,
+  CarReturnSchema,
   CarCreateRequestSchema,
   CarCreateSchema,
   CarUpdateRequestSchema,
+  CarCreateRequestWithotGallerySchema,
 };

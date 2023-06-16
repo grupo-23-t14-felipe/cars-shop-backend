@@ -1,12 +1,12 @@
 import { AppDataSource } from "../../data-source";
 import { Car, User } from "../../entities";
-import { ICar, ICarRepo } from "../../interfaces/cars.interfaces";
+import { ICar, ICarRepo, ICarReturn } from "../../interfaces/cars.interfaces";
 import { IUserRepo } from "../../interfaces/user.interface";
 
 export const listCarByUserIdService = async (
   searchedUserUUID: string,
   loggedUserUUID: string | null
-): Promise<ICar[]> => {
+): Promise<any> => {
   const carRepository: ICarRepo = AppDataSource.getRepository(Car);
   const userRepository: IUserRepo = AppDataSource.getRepository(User);
 
@@ -24,7 +24,7 @@ export const listCarByUserIdService = async (
       relations: {
         user: true,
         comments: true,
-        galleries: true,
+        gallery: true,
       },
     });
 
@@ -40,7 +40,7 @@ export const listCarByUserIdService = async (
       relations: {
         user: true,
         comments: true,
-        galleries: true,
+        gallery: true,
       },
     });
 
