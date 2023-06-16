@@ -1,7 +1,7 @@
 import { z } from 'zod';
 import { fuelType } from '../entities/cars.entity';
 
-const FuelType = z.enum([fuelType.DIESEL, fuelType.ETANOL, fuelType.GASOLINA,fuelType.FLEX]);
+const FuelType = z.enum([fuelType.flex, fuelType.hybrid, fuelType.eletric]);
 
 const CarSchema = z.object({
   uuid: z.string().uuid(),

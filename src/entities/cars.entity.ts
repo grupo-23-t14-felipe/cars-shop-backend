@@ -4,10 +4,9 @@ import { Comment } from "./comments.entity";
 import { Gallery } from "./galleries.entity";
 
 export enum fuelType{
-    DIESEL = 'diesel',
-    ETANOL = 'etanol',
-    GASOLINA = 'gasolina',
-    FLEX = 'flex'
+    flex = '1',
+    hybrid = '2',
+    eletric = '3',
 }
 
 @Entity('cars')
@@ -24,7 +23,7 @@ export class Car{
     @Column({type: 'integer'})
     year: number
     
-    @Column({type: 'enum', enum: fuelType})
+    @Column({type: 'enum', enum: fuelType, default: fuelType.flex})
     fuel_type: fuelType
     
     @Column({type: 'integer'})
