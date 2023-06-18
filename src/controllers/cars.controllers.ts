@@ -3,8 +3,9 @@ import { createCarService } from "../services/cars/createCars.service";
 import { updateCarService } from "../services/cars/updateCars.service";
 import { deleteCarService } from "../services/cars/deleteCars.service";
 import { ICar } from "../interfaces/cars.interfaces";
-import { listCarByUserIdService } from "../services/cars/listCarsByUserId.service";
+import { listCarByUserIdService } from "../services/users/listCarsByUserId.service";
 import listCarsService from "../services/cars/listCars.service";
+import retrieveCarService from "../services/cars/listCarsByUuid.service";
 
 export const createCarController = async (
   req: Request,
@@ -23,16 +24,13 @@ export const listCarsController = async (
   const cars = await listCarsService(page, filters);
   return res.status(200).json(cars);
 };
-
-export const listCarByUserIdController = async (
+export const listCarByUuidController = async (
   req: Request,
   res: Response
 ): Promise<Response> => {
-  const carList: ICar[] = await listCarByUserIdService(
-    req.params.userUUID,
-    req.user.uuid
-  );
-  return res.status(200).json(carList);
+  const uuid = req.params.carUUID;
+  const cars = await retrieveCarService(uuid);
+  return res.status(200).json(cars);
 };
 
 export const updateCarController = async (

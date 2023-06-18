@@ -1,4 +1,4 @@
-import { ICar, ICarRepo } from "../../interfaces/cars.interfaces";
+import { ICar, ICarRepo, ICarReturn } from "../../interfaces/cars.interfaces";
 import { Car } from "../../entities";
 import { AppDataSource } from "../../data-source";
 
@@ -18,7 +18,7 @@ interface ListCarsFilters {
 const listCarsService = async (
   page: number = 1,
   filters?: ListCarsFilters
-): Promise<ICar[]> => {
+): Promise<any> => {
   const carRepository: ICarRepo = AppDataSource.getRepository(Car);
 
   if (!page) page = 1;
@@ -26,11 +26,11 @@ const listCarsService = async (
   const itemsPerPage = 12;
   const offset = (page - 1) * itemsPerPage;
 
-  console.log(offset);
-
   const queryBuilder = carRepository
     .createQueryBuilder("car")
     .where("car.is_active = :is_active", { is_active: true })
+    .leftJoinAndSelect("car.gallery", "g")
+    .leftJoinAndSelect("car.user", "u")
     .skip(offset)
     .take(itemsPerPage);
 

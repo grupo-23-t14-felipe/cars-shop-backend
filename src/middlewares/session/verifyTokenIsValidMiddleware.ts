@@ -10,7 +10,7 @@ const verifyTokenIsValidMiddleware = (
 ): Response | void => {
   let token = req.headers.authorization;
 
-  if (!token && req.originalUrl.includes(`cars/${req.params.userUUID}`)) {
+  if (!token && req.originalUrl.includes(`users/${req.params.userUUID}`)) {
     req.user = {
       uuid: "",
     };

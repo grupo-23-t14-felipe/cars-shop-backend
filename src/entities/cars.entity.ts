@@ -1,34 +1,32 @@
-import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import {
+  Column,
+  Entity,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from "typeorm";
 import { User } from "./user.entity";
 import { Comment } from "./comments.entity";
 import { Gallery } from "./galleries.entity";
 
-export enum fuelType{
-    flex = '1',
-    hybrid = '2',
-    eletric = '3',
+export enum fuelType {
+  flex = "1",
+  hybrid = "2",
+  eletric = "3",
 }
 
-@Entity('cars')
-export class Car{
-    @PrimaryGeneratedColumn('uuid')
-    uuid: string
+@Entity("cars")
+export class Car {
+  @PrimaryGeneratedColumn("uuid")
+  uuid: string;
 
-    @Column({type: 'varchar', length: 20})
-    brand: string
+  @Column({ type: "varchar", length: 20 })
+  brand: string;
 
-    @Column({type: 'varchar', length: 40})
-    model: string
-    
-    @Column({type: 'integer'})
-    year: number
-    
-    @Column({type: 'enum', enum: fuelType, default: fuelType.flex})
-    fuel_type: fuelType
-    
-    @Column({type: 'integer'})
-    mileage: number
+  @Column({ type: "varchar", length: 40 })
+  model: string;
 
+<<<<<<< HEAD
     @Column({type: 'varchar', length: 30})
     color: string
     
@@ -43,17 +41,41 @@ export class Car{
 
     @Column({type: 'decimal', precision: 10, scale: 2})
     value: number
+=======
+  @Column({ type: "integer" })
+  year: number;
+>>>>>>> 6260cd7e20b25cd0d7122f77fe0178bb4a67b528
 
-    @Column({type: 'text'})
-    description: string
+  @Column({ type: "enum", enum: fuelType, default: fuelType.flex })
+  fuel_type: fuelType;
 
-    @ManyToOne(() => User, (user) => user.cars)
-    user: User
+  @Column({ type: "integer" })
+  mileage: number;
 
-    @OneToMany(() => Comment, (comment) => comment.car)
-    comments: Comment[]
+  @Column({ type: "varchar", length: 30 })
+  color: string;
 
-    @OneToMany(() => Gallery, (gallery) => gallery.car)
-    galleries: Gallery[]
+  @Column({ type: "boolean" })
+  is_good_deal: boolean;
 
+  @Column({ type: "boolean" })
+  is_active: boolean;
+
+  @Column({ type: "decimal", precision: 10, scale: 2 })
+  value: number;
+
+  @Column({ type: "text" })
+  description: string;
+
+  @Column({ type: "text" })
+  img_default: string;
+
+  @ManyToOne(() => User, (user) => user.cars)
+  user: User;
+
+  @OneToMany(() => Comment, (comment) => comment.car)
+  comments: Comment[];
+
+  @OneToMany(() => Gallery, (gallery) => gallery.car)
+  gallery: Gallery[];
 }
