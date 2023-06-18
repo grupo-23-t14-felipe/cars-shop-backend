@@ -11,6 +11,7 @@ const CarSchema = z.object({
   fuel_type: FuelType,
   mileage: z.number().int(),
   color: z.string().max(30),
+  img_default: z.string(),
   is_good_deal: z.boolean(),
   is_active: z.boolean(),
   value: z.number().positive(),

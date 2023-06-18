@@ -38,6 +38,9 @@ export class Car{
     @Column({type: 'boolean'})
     is_active: boolean
     
+    @Column({type: 'varchar'})
+    img_default: string
+
     @Column({type: 'decimal', precision: 10, scale: 2})
     value: number
 
