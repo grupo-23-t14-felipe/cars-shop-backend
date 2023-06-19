@@ -26,25 +26,8 @@ export class Car {
   @Column({ type: "varchar", length: 40 })
   model: string;
 
-<<<<<<< HEAD
-    @Column({type: 'varchar', length: 30})
-    color: string
-    
-    @Column({type: 'boolean'})
-    is_good_deal: boolean
-    
-    @Column({type: 'boolean'})
-    is_active: boolean
-    
-    @Column({type: 'varchar'})
-    img_default: string
-
-    @Column({type: 'decimal', precision: 10, scale: 2})
-    value: number
-=======
   @Column({ type: "integer" })
   year: number;
->>>>>>> 6260cd7e20b25cd0d7122f77fe0178bb4a67b528
 
   @Column({ type: "enum", enum: fuelType, default: fuelType.flex })
   fuel_type: fuelType;

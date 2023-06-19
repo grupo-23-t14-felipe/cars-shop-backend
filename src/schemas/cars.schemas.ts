@@ -18,7 +18,6 @@ const CarSchema = z.object({
   value: z.number().positive(),
   description: z.string(),
   user: z.object({}),
-  img_default: z.string(),
   comments: z.array(z.object({})).optional(),
   gallery: z.array(z.string()),
 });
