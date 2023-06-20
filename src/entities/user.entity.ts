@@ -45,14 +45,14 @@ export class User {
   @Column({ type: "boolean", nullable: true })
   is_seller: boolean | null | undefined;
 
-  @OneToOne(() => Address)
+  @OneToOne(() => Address, { cascade: true, onDelete: "CASCADE" })
   @JoinColumn()
   address: Address;
 
-  @OneToMany(() => Car, (car) => car.user)
+  @OneToMany(() => Car, (car) => car.user,{ cascade: true, onDelete: "CASCADE" })
   cars: Car[];
 
-  @OneToMany(() => Comment, (comment) => comment.user)
+  @OneToMany(() => Comment, (comment) => comment.user,{ cascade: true, onDelete: "CASCADE" })
   comments: Comment[];
 
   @BeforeInsert()
