@@ -14,10 +14,13 @@ interface ListCarsFilters {
   mileageMin?: number;
   mileageMax?: number;
 }
-
 const listCarsService = async (
   page: number = 1,
-  filters?: ListCarsFilters
+  filters?: ListCarsFilters,
+  valueMin?: boolean,
+  valueMax?: boolean,
+  mileageMin?: boolean,
+  mileageMax?: boolean
 ): Promise<any> => {
   const carRepository: ICarRepo = AppDataSource.getRepository(Car);
 
@@ -42,10 +45,10 @@ const listCarsService = async (
       year,
       model,
       brand,
-      valueMin,
-      valueMax,
-      mileageMin,
-      mileageMax,
+      valueMin: filterValueMin,
+      valueMax: filterValueMax,
+      mileageMin: filterMileageMin,
+      mileageMax: filterMileageMax,
     } = filters;
 
     if (fuelType) {
@@ -66,17 +69,19 @@ const listCarsService = async (
     if (brand) {
       queryBuilder.andWhere("car.brand = :brand", { brand });
     }
-    if (valueMin !== undefined) {
-      queryBuilder.andWhere("car.value >= :valueMin", { valueMin });
-    }
-    if (valueMax !== undefined) {
-      queryBuilder.andWhere("car.value <= :valueMax", { valueMax });
-    }
     if (mileageMin !== undefined) {
       queryBuilder.andWhere("car.mileage >= :mileageMin", { mileageMin });
     }
     if (mileageMax !== undefined) {
       queryBuilder.andWhere("car.mileage <= :mileageMax", { mileageMax });
+    }
+
+    if (filterValueMin || filterValueMax) {
+      queryBuilder.orderBy("car.value", filterValueMin ? "ASC" : "DESC");
+    }
+    
+    if (filterMileageMin || filterMileageMax) {
+      queryBuilder.orderBy("car.mileage", filterMileageMin ? "ASC" : "DESC");
     }
   }
 
