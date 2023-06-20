@@ -56,9 +56,9 @@ export class Car {
   @ManyToOne(() => User, (user) => user.cars)
   user: User;
 
-  @OneToMany(() => Comment, (comment) => comment.car)
+  @OneToMany(() => Comment, (comment) => comment.car, { cascade: true, onDelete: "CASCADE" })
   comments: Comment[];
 
-  @OneToMany(() => Gallery, (gallery) => gallery.car)
+  @OneToMany(() => Gallery, (gallery) => gallery.car, { cascade: true, onDelete: "CASCADE" })
   gallery: Gallery[];
 }
