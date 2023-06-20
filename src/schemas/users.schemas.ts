@@ -42,6 +42,8 @@ const UserLoginResponseSchema = z.object({
   token: z.string(),
 });
 
+const UserUpdateRequestSchema = UserCreateRequestSchema.partial();
+
 export {
   UserSchema,
   UserLoginResponseSchema,
@@ -49,4 +51,5 @@ export {
   UserRelatedSchema,
   UserCreateRequestSchema,
   UserCreateResponseSchema,
+  UserUpdateRequestSchema,
 };

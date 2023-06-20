@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { createUserService } from "../services/users/createUsers.service";
 import { ICar } from "../interfaces/cars.interfaces";
 import { listCarByUserIdService } from "../services/users/listCarsByUserId.service";
+import { updateUserService } from "../services/users/updateUsers.service";
 
 export const createUserController = async (
   req: Request,
@@ -20,4 +21,12 @@ export const listCarByUserIdController = async (
     req.user.uuid
   );
   return res.status(200).json(carList);
+};
+
+export const updateUserController = async (
+  req: Request,
+  res: Response
+): Promise<Response> => {
+  const updatedUser = await updateUserService(req.body, req.params.userUUID);
+  return res.status(200).json(updatedUser);
 };
