@@ -1,11 +1,11 @@
 import { Router } from "express";
-import { 
-  createUserController, 
-  updateUserController, 
-  deleteUserController, 
+import {
+  createUserController,
+  updateUserController,
+  deleteUserController,
   sendEmailController,
   retrieveUserController,
-  updateAddressController
+  updateAddressController,
 } from "../controllers/users.controllers";
 import { validateDataMdwr } from "../middlewares/validateDataMiddleware";
 import {
@@ -25,7 +25,7 @@ usersRouter.post(
   createUserController
 );
 usersRouter.get(
-  "cars/:userUUID",
+  "/cars/:userUUID",
   verifyTokenIsValidMiddleware,
   ensureUserUuidExistsMdwr,
   listCarByUserIdController
@@ -46,20 +46,18 @@ usersRouter.delete(
   ensureUserHasPermissionMdwr,
   deleteUserController
 );
-usersRouter.post(
-  "/reset-password", sendEmailController
-)
+usersRouter.post("/reset-password", sendEmailController);
 
 usersRouter.get(
-  '/:userUUID',
+  "/:userUUID",
   verifyTokenIsValidMiddleware,
   ensureUserHasPermissionMdwr,
   retrieveUserController
-)
+);
 
 usersRouter.patch(
-  '/address/:userUUID',
+  "/address/:userUUID",
   verifyTokenIsValidMiddleware,
   ensureUserHasPermissionMdwr,
   updateAddressController
-)
+);

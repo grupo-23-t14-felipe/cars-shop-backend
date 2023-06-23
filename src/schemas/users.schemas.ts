@@ -15,7 +15,24 @@ const UserSchema = z.object({
   is_seller: z.boolean().nullable().optional(),
   address: AddressSchema,
   reset_password: z.string().optional().nullable(),
-  cars: z.array(CarSchema).optional(),
+  cars: z
+    .array(
+      z.object({
+        uuid: z.string(),
+        brand: z.string(),
+        model: z.string(),
+        year: z.number(),
+        fuel_type: z.string(),
+        mileage: z.number(),
+        color: z.string(),
+        is_good_deal: z.boolean(),
+        is_active: z.boolean(),
+        value: z.string(),
+        description: z.string(),
+        img_default: z.string(),
+      })
+    )
+    .optional(),
   comments: z.array(z.object({})).optional(),
 });
 
