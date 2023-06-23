@@ -5,6 +5,7 @@ import { listCarByUserIdService } from "../services/users/listCarsByUserId.servi
 import { updateUserService } from "../services/users/updateUsers.service";
 import { deleteUserService } from "../services/users/deleteUser.service";
 import sendEmailService from "../services/users/getUserEmail.service";
+import { retrieveUserService } from "../services/users/retrieveUser.service";
 
 export const createUserController = async (
   req: Request,
@@ -47,4 +48,13 @@ export const sendEmailController = async (
 ): Promise<Response> => {
 const message = await sendEmailService(req.body.email);
   return res.status(200).send(message);
+};
+
+export const retrieveUserController = async (
+  req: Request,
+  res: Response
+): Promise<Response> => {
+const userId = req.params.userUUID
+const user =  await retrieveUserService(userId);
+  return res.status(200).json(user);
 };

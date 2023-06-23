@@ -3,7 +3,8 @@ import {
   createUserController, 
   updateUserController, 
   deleteUserController, 
-  sendEmailController
+  sendEmailController,
+  retrieveUserController
 } from "../controllers/users.controllers";
 import { validateDataMdwr } from "../middlewares/validateDataMiddleware";
 import {
@@ -23,7 +24,7 @@ usersRouter.post(
   createUserController
 );
 usersRouter.get(
-  "/:userUUID",
+  "cars/:userUUID",
   verifyTokenIsValidMiddleware,
   ensureUserUuidExistsMdwr,
   listCarByUserIdController
@@ -46,4 +47,11 @@ usersRouter.delete(
 );
 usersRouter.post(
   "/reset-password", sendEmailController
+)
+
+usersRouter.get(
+  '/:userUUID',
+  verifyTokenIsValidMiddleware,
+  ensureUserHasPermissionMdwr,
+  retrieveUserController
 )
