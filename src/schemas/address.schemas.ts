@@ -14,4 +14,6 @@ const AddressCreateSchema = AddressSchema.omit({
   uuid: true,
 });
 
-export { AddressSchema, AddressCreateSchema };
+const AddressUpdateSchema = AddressSchema.partial();
+
+export { AddressSchema, AddressCreateSchema, AddressUpdateSchema };

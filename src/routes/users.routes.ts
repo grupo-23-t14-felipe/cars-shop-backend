@@ -4,7 +4,8 @@ import {
   updateUserController, 
   deleteUserController, 
   sendEmailController,
-  retrieveUserController
+  retrieveUserController,
+  updateAddressController
 } from "../controllers/users.controllers";
 import { validateDataMdwr } from "../middlewares/validateDataMiddleware";
 import {
@@ -54,4 +55,9 @@ usersRouter.get(
   verifyTokenIsValidMiddleware,
   ensureUserHasPermissionMdwr,
   retrieveUserController
+)
+
+usersRouter.patch(
+  '/address/:userUUID',
+  updateAddressController
 )
