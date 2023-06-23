@@ -14,6 +14,7 @@ const UserSchema = z.object({
   imageUrl: z.string().nullable().optional(),
   is_seller: z.boolean().nullable().optional(),
   address: AddressSchema,
+  reset_password: z.string().optional().nullable(),
   cars: z.array(CarSchema).optional(),
   comments: z.array(z.object({})).optional(),
 });

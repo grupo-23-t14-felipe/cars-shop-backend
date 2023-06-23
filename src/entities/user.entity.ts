@@ -45,6 +45,9 @@ export class User {
   @Column({ type: "boolean", nullable: true })
   is_seller: boolean | null | undefined;
 
+  @Column({ type: "varchar", nullable: true})
+  reset_password: string | null | undefined
+
   @OneToOne(() => Address, { cascade: true, onDelete: "CASCADE" })
   @JoinColumn()
   address: Address;

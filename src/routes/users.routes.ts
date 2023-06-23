@@ -2,7 +2,8 @@ import { Router } from "express";
 import { 
   createUserController, 
   updateUserController, 
-  deleteUserController 
+  deleteUserController, 
+  sendEmailController
 } from "../controllers/users.controllers";
 import { validateDataMdwr } from "../middlewares/validateDataMiddleware";
 import {
@@ -43,4 +44,6 @@ usersRouter.delete(
   ensureUserHasPermissionMdwr,
   deleteUserController
 );
-
+usersRouter.post(
+  "/reset-password", sendEmailController
+)

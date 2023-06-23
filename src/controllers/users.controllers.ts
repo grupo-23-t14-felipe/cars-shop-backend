@@ -4,6 +4,7 @@ import { ICar } from "../interfaces/cars.interfaces";
 import { listCarByUserIdService } from "../services/users/listCarsByUserId.service";
 import { updateUserService } from "../services/users/updateUsers.service";
 import { deleteUserService } from "../services/users/deleteUser.service";
+import sendEmailService from "../services/users/getUserEmail.service";
 
 export const createUserController = async (
   req: Request,
@@ -40,3 +41,10 @@ export const deleteUserController = async (
   return res.status(204).send();
 };
 
+export const sendEmailController = async (
+  req: Request,
+  res: Response
+): Promise<Response> => {
+const message = await sendEmailService(req.body.email);
+  return res.status(200).send(message);
+};
