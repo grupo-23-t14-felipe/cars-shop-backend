@@ -59,5 +59,7 @@ usersRouter.get(
 
 usersRouter.patch(
   '/address/:userUUID',
+  verifyTokenIsValidMiddleware,
+  ensureUserHasPermissionMdwr,
   updateAddressController
 )
