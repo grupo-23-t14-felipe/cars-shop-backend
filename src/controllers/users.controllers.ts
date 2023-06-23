@@ -6,6 +6,7 @@ import { updateUserService } from "../services/users/updateUsers.service";
 import { deleteUserService } from "../services/users/deleteUser.service";
 import sendEmailService from "../services/users/getUserEmail.service";
 import { retrieveUserService } from "../services/users/retrieveUser.service";
+import { updateAddressService } from "../services/address/updateAddress.service";
 
 export const createUserController = async (
   req: Request,
@@ -57,4 +58,12 @@ export const retrieveUserController = async (
 const userId = req.params.userUUID
 const user =  await retrieveUserService(userId);
   return res.status(200).json(user);
+};
+
+export const updateAddressController = async (
+  req: Request,
+  res: Response
+): Promise<Response> => {
+  const updatedAddress = await updateAddressService(req.body, req.params.userUUID);
+  return res.status(201).json(updatedAddress);
 };
