@@ -13,8 +13,8 @@ export const updateUserService = async (
   });
 
   const updatedUserInfo = {
-    ...payload,
     ...userToUpdate!,
+    ...payload,
   };
 
   const updatedUser = userRepository.create(updatedUserInfo);
