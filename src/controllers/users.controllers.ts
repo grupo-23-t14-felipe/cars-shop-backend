@@ -3,6 +3,7 @@ import { createUserService } from "../services/users/createUsers.service";
 import { ICar } from "../interfaces/cars.interfaces";
 import { listCarByUserIdService } from "../services/users/listCarsByUserId.service";
 import { updateUserService } from "../services/users/updateUsers.service";
+import { deleteUserService } from "../services/users/deleteUser.service";
 
 export const createUserController = async (
   req: Request,
@@ -30,3 +31,12 @@ export const updateUserController = async (
   const updatedUser = await updateUserService(req.body, req.params.userUUID);
   return res.status(200).json(updatedUser);
 };
+
+export const deleteUserController = async (
+  req: Request,
+  res: Response
+): Promise<Response> => {
+  await deleteUserService(req.params.userUUID);
+  return res.status(204).send();
+};
+
