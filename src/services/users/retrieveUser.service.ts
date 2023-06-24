@@ -16,7 +16,6 @@ export const retrieveUserService = async (
       address: true,
     },
   });
-  console.log(user);
 
   const parsedUser = UserCreateResponseSchema.parse(user);
 
