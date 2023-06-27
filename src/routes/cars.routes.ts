@@ -14,10 +14,11 @@ import {
 import { ensureCarExistsMdwr } from "../middlewares/cars/ensureCarExists.middleware";
 import verifyTokenIsValidMiddleware from "../middlewares/session/verifyTokenIsValidMiddleware";
 import { checkOwnershipMiddleware } from "../middlewares/cars/ownership.middleware";
+import { createCommentController, deleteCommentController, updateCommentController } from "../controllers/comments.controllers";
+import { commentCreateSchema, commentUpdateSchema } from "../schemas/comments.schemas";
 
 export const carsRouter = Router();
 
-// Quando tiver a rota de login implementada, adicionar aqui autenticação no middleware, passando o UUID do usuário para o req.user
 carsRouter.post(
   "",
   verifyTokenIsValidMiddleware,
@@ -42,3 +43,20 @@ carsRouter.delete(
   ensureCarExistsMdwr,
   deleteCarController
 );
+
+carsRouter.post(
+  "/comments/:carUUID", 
+  validateDataMdwr(commentCreateSchema),
+  verifyTokenIsValidMiddleware,
+  createCommentController)
+
+carsRouter.patch(
+"/comments/:commentUUID", 
+  validateDataMdwr(commentUpdateSchema),
+  verifyTokenIsValidMiddleware,
+  updateCommentController)
+
+carsRouter.delete(
+  "/comments/:commentUUID", 
+  verifyTokenIsValidMiddleware,
+  deleteCommentController)
