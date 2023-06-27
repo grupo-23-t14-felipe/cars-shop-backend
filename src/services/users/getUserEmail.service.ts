@@ -31,54 +31,53 @@ const sendEmailService = async (to: string): Promise<any> => {
 
   const resetToken = randomUUID();
 
-  if (user) {
-    const updatedUserInfo = {
-      ...user!,
-      reset_password: resetToken,
-    };
-    const updatedUser = userRepository.create(updatedUserInfo);
-    await userRepository.save(updatedUser);
+  const updatedUserInfo = {
+    ...user,
+    reset_password: resetToken,
+  };
 
-    const email = {
-      body: {
-        name: user?.name,
-        intro:
-          "You have received this email because a password reset request for your account was received.",
-        action: {
-          instructions: "Click the button below to reset your password:",
-          button: {
-            color: "#DC4D2F",
-            text: "Reset your password",
-            link: `http://localhost:3000/resetPassword/${resetToken}`,
-          },
+  const updatedUser = userRepository.create(updatedUserInfo);
+  await userRepository.save(updatedUser);
+
+  const email = {
+    body: {
+      name: user?.name,
+      intro:
+        "You have received this email because a password reset request for your account was received.",
+      action: {
+        instructions: "Click the button below to reset your password:",
+        button: {
+          color: "#DC4D2F",
+          text: "Reset your password",
+          link: `http://localhost:3000/resetPassword/${resetToken}`,
         },
-        outro:
-          "If you did not request a password reset, no further action is required on your part.",
       },
-    };
+      outro:
+        "If you did not request a password reset, no further action is required on your part.",
+    },
+  };
 
-    const mailGenerator = new Mailgen({
-      theme: "default",
-      product: {
-        name: "M6 T14",
-        link: "http://localhost:3000",
-      },
-    });
+  const mailGenerator = new Mailgen({
+    theme: "default",
+    product: {
+      name: "M6 T14",
+      link: "http://localhost:3000",
+    },
+  });
 
-    const generate = mailGenerator.generate(email);
+  const generate = mailGenerator.generate(email);
 
-    const sendEmail = await transporter.sendMail({
-      from: process.env.SMTP_USER,
-      to: to,
-      subject: "reset password",
-      html: generate,
-    });
+  const sendEmail = await transporter.sendMail({
+    from: process.env.SMTP_USER,
+    to: to,
+    subject: "reset password",
+    html: generate,
+  });
 
-    if (sendEmail) {
-      return { message: "Email enviado com sucesso!" };
-    } else {
-      throw new AppError("Erro ao enviar email!", 400);
-    }
+  if (sendEmail) {
+    return { message: "Email enviado com sucesso!" };
+  } else {
+    throw new AppError("Erro ao enviar email!", 400);
   }
 };
 
