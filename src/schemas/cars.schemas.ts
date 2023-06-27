@@ -46,6 +46,19 @@ const CarCreateRequestWithotGallerySchema = CarCreateSchema.omit({
 
 const CarUpdateRequestSchema = CarCreateRequestSchema.partial();
 
+const CarUpdateRequestRequiredSchema = CarCreateRequestSchema.omit({
+  gallery: true,
+})
+  .extend({
+    gallery: z.array(
+      z.object({
+        uuid: z.string().uuid(),
+        imageUrl: z.string(),
+      })
+    ),
+  })
+  .required();
+
 export {
   CarSchema,
   CarReturnSchema,
@@ -53,4 +66,5 @@ export {
   CarCreateSchema,
   CarUpdateRequestSchema,
   CarCreateRequestWithotGallerySchema,
+  CarUpdateRequestRequiredSchema,
 };
