@@ -29,7 +29,6 @@ export const updateCarService = async (
 
   const results = [];
 
-  console.log(carToUpdate);
   if (payload.gallery?.length) {
     for (let i = 0; i < payload.gallery.length; i++) {
       const createLinks = galleryRepo.create({

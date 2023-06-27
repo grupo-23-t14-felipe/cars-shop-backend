@@ -13,17 +13,19 @@ export const resetPasswordService = async (
   const userToUpdate: User | null = await userRepository.findOne({
     where:{
       reset_password: randomUUID,
+    },relations:{
+      address: true
     }
   });
 
   if (userToUpdate) {
     userToUpdate.password = newPassword
 
-    await userRepository.save(userToUpdate)
+   const returnUser = await userRepository.save(userToUpdate)
 
-    const parsedUser = UserCreateResponseSchema.parse(userToUpdate);
+   // const parsedUser = UserCreateResponseSchema.parse(userToUpdate);
 
-    return parsedUser
+    return returnUser
   }
 
   throw new AppError("User not found", 404)
