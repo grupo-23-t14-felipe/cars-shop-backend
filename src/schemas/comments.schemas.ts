@@ -12,7 +12,7 @@ const commentSchema = z.object({
 
 const commentCreateSchema = z.object({
   description: z.string()
-})
+});
 const commentUpdateSchema = commentSchema.partial();
 
 const commentResponse = z.object({
@@ -20,6 +20,6 @@ const commentResponse = z.object({
   userId: z.string(), 
   uuid: z.string(), 
   carId: z.string() 
-})
+});
 
 export { commentSchema, commentCreateSchema, commentUpdateSchema, commentResponse };

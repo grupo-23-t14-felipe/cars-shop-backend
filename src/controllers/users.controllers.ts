@@ -21,7 +21,7 @@ export const listCarByUserIdController = async (
   req: Request,
   res: Response
 ): Promise<Response> => {
-  const carList: ICar[] = await listCarByUserIdService(
+  const carList = await listCarByUserIdService(
     req.params.userUUID,
     req.user.uuid
   );
