@@ -1,9 +1,7 @@
 import { createTransport } from 'nodemailer'
-import { IEmailRequest } from '../../interfaces/email.interface';
 import 'dotenv/config'
 import { AppDataSource } from '../../data-source';
 import { IUserRepo } from '../../interfaces/user.interface';
-import { UserCreateRequestSchema } from '../../schemas/users.schemas';
 import { User } from '../../entities';
 import { randomUUID } from 'crypto';
 import Mailgen from 'mailgen';

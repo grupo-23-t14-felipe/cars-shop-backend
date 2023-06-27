@@ -7,6 +7,7 @@ import { deleteUserService } from "../services/users/deleteUser.service";
 import sendEmailService from "../services/users/getUserEmail.service";
 import { retrieveUserService } from "../services/users/retrieveUser.service";
 import { updateAddressService } from "../services/address/updateAddress.service";
+import { resetPasswordService } from "../services/users/resetPassword.service";
 
 export const createUserController = async (
   req: Request,
@@ -66,4 +67,12 @@ export const updateAddressController = async (
 ): Promise<Response> => {
   const updatedAddress = await updateAddressService(req.body, req.params.userUUID);
   return res.status(201).json(updatedAddress);
+};
+
+export const resetPasswordController = async (
+  req: Request,
+  res: Response
+): Promise<Response> => {
+  const user = await resetPasswordService(req.body.new_password, req.params.randomUUID);
+  return res.status(200).json(user);
 };

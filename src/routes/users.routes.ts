@@ -6,6 +6,7 @@ import {
   sendEmailController,
   retrieveUserController,
   updateAddressController,
+  resetPasswordController,
 } from "../controllers/users.controllers";
 import { validateDataMdwr } from "../middlewares/validateDataMiddleware";
 import {
@@ -60,4 +61,8 @@ usersRouter.patch(
   verifyTokenIsValidMiddleware,
   ensureUserHasPermissionMdwr,
   updateAddressController
+);
+usersRouter.patch(
+  "/reset-password/:randomUUID",
+  resetPasswordController
 );
