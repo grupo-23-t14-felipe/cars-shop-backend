@@ -1,6 +1,8 @@
 import { ICar, ICarRepo, ICarReturn } from "../../interfaces/cars.interfaces";
 import { Car } from "../../entities";
 import { AppDataSource } from "../../data-source";
+import { MultipleCarResponseSchema } from "../../schemas/cars.schemas";
+import { parseArgs } from "util";
 
 interface ListCarsFilters {
   fuelType?: string;
@@ -87,7 +89,9 @@ const listCarsService = async (
 
   const cars = await queryBuilder.getMany();
 
-  return cars;
+  const parsedCars = MultipleCarResponseSchema.parse(cars)
+
+  return parsedCars
 };
 
 export default listCarsService;

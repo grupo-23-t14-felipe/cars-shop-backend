@@ -6,7 +6,7 @@ import {
   ICarRepo,
 } from "../../interfaces/cars.interfaces";
 import { IUserRepo } from "../../interfaces/user.interface";
-import { CarCreateRequestWithotGallerySchema } from "../../schemas/cars.schemas";
+import { CarCreateRequestWithotGallerySchema, retrieveCarSchema } from "../../schemas/cars.schemas";
 
 export const createCarService = async (
   payload: ICarCreateRequest,
@@ -34,18 +34,30 @@ export const createCarService = async (
     ...newCarInfoParsed,
     user: logedUser!,
   });
-  await carRepository.save(createdCar);
+  const savedCar = await carRepository.save(createdCar);
 
   const results = [];
 
   for (let i = 0; i < linksGallery.length; i++) {
     const createLinks = galleryRepository.create({
       imageUrl: linksGallery[i],
-      car: createdCar,
+      car: savedCar,
     });
     const response = await galleryRepository.save(createLinks);
     results.push(response);
   }
 
-  return { ...createdCar, gallery: results };
+  const queryBuilder = carRepository.createQueryBuilder("car");
+
+  const carId = savedCar.uuid
+  const car = await queryBuilder
+  .leftJoinAndSelect("car.user", "user")
+  .leftJoinAndSelect("car.gallery", "gallery")
+  .where("car.uuid = :carId", { carId }) 
+  .getOne();
+
+  const parsedCar = retrieveCarSchema.parse(car)
+  
+  return parsedCar;
+
 };

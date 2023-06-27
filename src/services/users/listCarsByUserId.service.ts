@@ -1,7 +1,8 @@
 import { AppDataSource } from "../../data-source";
 import { Car, User } from "../../entities";
-import { ICar, ICarRepo, ICarReturn } from "../../interfaces/cars.interfaces";
+import { ICarRepo } from "../../interfaces/cars.interfaces";
 import { IUserRepo } from "../../interfaces/user.interface";
+import { MultipleCarResponseSchema } from "../../schemas/cars.schemas";
 
 export const listCarByUserIdService = async (
   searchedUserUUID: string,
@@ -13,37 +14,25 @@ export const listCarByUserIdService = async (
   const searchedUser = await userRepository.findOneByOrFail({
     uuid: searchedUserUUID,
   });
-
+  const queryBuilder = carRepository.createQueryBuilder("car");
   if (searchedUserUUID === loggedUserUUID) {
-    const cars = carRepository.find({
-      where: {
-        user: {
-          uuid: searchedUserUUID,
-        },
-      },
-      relations: {
-        user: true,
-        comments: true,
-        gallery: true,
-      },
-    });
+    const cars = await queryBuilder
+      .leftJoinAndSelect("car.user", "user")
+      .leftJoinAndSelect("car.gallery", "gallery")
+      .where("user.uuid = :searchedUserUUID", { searchedUserUUID })
+      .getMany();
 
-    return cars;
+    const parsedCars = MultipleCarResponseSchema.parse(cars);
+    return parsedCars;
   } else {
-    const cars = carRepository.find({
-      where: {
-        user: {
-          uuid: searchedUserUUID,
-        },
-        is_active: true,
-      },
-      relations: {
-        user: true,
-        comments: true,
-        gallery: true,
-      },
-    });
+    const cars = await queryBuilder
+      .leftJoinAndSelect("car.user", "user")
+      .leftJoinAndSelect("car.gallery", "gallery")
+      .where("user.uuid = :searchedUserUUID", { searchedUserUUID })
+      .andWhere("car.is_active = :isActive", { isActive: true })
+      .getMany();
 
-    return cars;
+    const parsedCars = MultipleCarResponseSchema.parse(cars);
+    return parsedCars;
   }
 };

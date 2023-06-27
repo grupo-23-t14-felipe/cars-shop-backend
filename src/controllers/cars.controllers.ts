@@ -3,7 +3,7 @@ import { createCarService } from "../services/cars/createCars.service";
 import { updateCarService } from "../services/cars/updateCars.service";
 import { deleteCarService } from "../services/cars/deleteCars.service";
 import listCarsService from "../services/cars/listCars.service";
-import retrieveCarService from "../services/cars/listCarsByUuid.service";
+import retrieveCarService from "../services/cars/retrieveCars.service";
 
 export const createCarController = async (
   req: Request,
