@@ -80,7 +80,6 @@ const sendEmailService = async(to: string): Promise<any> => {
     }else{
         throw new AppError("Erro ao enviar email!",400)
     }
-    
 
 }
 

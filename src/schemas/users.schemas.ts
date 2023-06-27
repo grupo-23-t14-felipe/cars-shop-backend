@@ -13,7 +13,7 @@ const UserSchema = z.object({
   description: z.string().nullable().optional(),
   imageUrl: z.string().nullable().optional(),
   is_seller: z.boolean().nullable().optional(),
-  address: AddressSchema,
+  address: AddressSchema.optional(),
   reset_password: z.string().optional().nullable(),
   cars: z
     .array(
@@ -60,13 +60,29 @@ const UserLoginResponseSchema = z.object({
   token: z.string(),
 });
 
-const UserUpdateRequestSchema = UserCreateRequestSchema.partial();
+const UserUpdateRequestSchema = UserCreateRequestSchema.partial({
+  
+});
+
+const UserResponseSchema = UserSchema.omit({
+  password: true,
+  comments: true,
+  cars: true,
+  address: true,
+  cpf: true,
+  celphone: true,
+  birthday: true,
+  is_seller: true,
+  reset_password: true,
+  email: true
+})
 
 export {
   UserSchema,
   UserLoginResponseSchema,
   UserLoginSchema,
   UserRelatedSchema,
+  UserResponseSchema,
   UserCreateRequestSchema,
   UserCreateResponseSchema,
   UserUpdateRequestSchema,
