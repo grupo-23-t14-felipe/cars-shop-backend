@@ -36,7 +36,7 @@ const sendEmailService = async(to: string): Promise<any> => {
         const updatedUserInfo = {
           ...user!,
           reset_password: resetToken,
-        };
+        }}
     const updatedUser = userRepository.create(user);
     await userRepository.save(updatedUser);
       
