@@ -29,8 +29,13 @@ const sendEmailService = async(to: string): Promise<any> => {
     if(!user){
         throw new AppError("user not found", 404)
     }
-
+    
     const resetToken = randomUUID()
+
+    if(user) user.reset_password  = resetToken
+
+    await userRepository.save(user);
+
 
     const email = {
         body: {
