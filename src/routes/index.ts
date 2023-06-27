@@ -8,5 +8,4 @@ const router = Router();
 router.use("/login", sessionRouter);
 router.use("/cars", carsRouter);
 router.use("/users", usersRouter);
-
 export default router;

@@ -8,7 +8,7 @@ export class Comment{
     uuid: string
 
     @CreateDateColumn({type: 'date'})
-    addedIn: string
+    addedIn: Date
 
     @Column({type: 'text'})
     description: string

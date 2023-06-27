@@ -2,8 +2,6 @@ import { Request, Response } from "express";
 import { createCarService } from "../services/cars/createCars.service";
 import { updateCarService } from "../services/cars/updateCars.service";
 import { deleteCarService } from "../services/cars/deleteCars.service";
-import { ICar } from "../interfaces/cars.interfaces";
-import { listCarByUserIdService } from "../services/users/listCarsByUserId.service";
 import listCarsService from "../services/cars/listCars.service";
 import retrieveCarService from "../services/cars/listCarsByUuid.service";
 
