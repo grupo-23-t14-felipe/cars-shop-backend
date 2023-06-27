@@ -13,7 +13,9 @@ const retrieveCarService = async (uuid: string): Promise<Car> => {
     relations: {
       user: true,
       gallery: true,
-      comments: true,
+      comments: {
+        user: true,
+      },
     },
   });
 
