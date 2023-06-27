@@ -32,10 +32,14 @@ const sendEmailService = async(to: string): Promise<any> => {
     
     const resetToken = randomUUID()
 
-    if(user) user.reset_password  = resetToken
-
-    await userRepository.save(user);
-
+    if (user) {
+        const updatedUserInfo = {
+          ...user!,
+          reset_password: resetToken,
+        };
+    const updatedUser = userRepository.create(user);
+    await userRepository.save(updatedUser);
+      
 
     const email = {
         body: {
