@@ -11,9 +11,9 @@ export const resetPasswordService = async (
   const userRepository: IUserRepo = AppDataSource.getRepository(User);
 
   const userToUpdate: User | null = await userRepository.findOne({
-    where:{
+    where: {
       reset_password: randomUUID,
-    }
+    },
   });
 
   if (userToUpdate) {
@@ -21,12 +21,12 @@ export const resetPasswordService = async (
       ...userToUpdate!,
       password: newPassword,
     };
-  
+
     const updatedUser = userRepository.create(updatedUserInfo);
     await userRepository.save(updatedUser);
-  
+
     return updatedUser;
   }
 
-  throw new AppError("User not found", 404)
+  throw new AppError("User not found", 404);
 };

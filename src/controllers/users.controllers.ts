@@ -48,7 +48,7 @@ export const sendEmailController = async (
   req: Request,
   res: Response
 ): Promise<Response> => {
-const message = await sendEmailService(req.body.email);
+  const message = await sendEmailService(req.body.email);
   return res.status(200).send(message);
 };
 
@@ -56,8 +56,8 @@ export const retrieveUserController = async (
   req: Request,
   res: Response
 ): Promise<Response> => {
-const userId = req.params.userUUID
-const user =  await retrieveUserService(userId);
+  const userId = req.params.userUUID;
+  const user = await retrieveUserService(userId);
   return res.status(200).json(user);
 };
 
@@ -65,7 +65,10 @@ export const updateAddressController = async (
   req: Request,
   res: Response
 ): Promise<Response> => {
-  const updatedAddress = await updateAddressService(req.body, req.params.userUUID);
+  const updatedAddress = await updateAddressService(
+    req.body,
+    req.params.userUUID
+  );
   return res.status(201).json(updatedAddress);
 };
 
@@ -73,6 +76,9 @@ export const resetPasswordController = async (
   req: Request,
   res: Response
 ): Promise<Response> => {
-  const user = await resetPasswordService(req.body.new_password, req.params.randomUUID);
+  const user = await resetPasswordService(
+    req.body.new_password,
+    req.params.randomUUID
+  );
   return res.status(200).json(user);
 };
