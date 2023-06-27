@@ -10,8 +10,10 @@ export const resetPasswordService = async (
 ) => {
   const userRepository: IUserRepo = AppDataSource.getRepository(User);
 
-  const userToUpdate: User | null = await userRepository.findOneBy({
-    reset_password: randomUUID,
+  const userToUpdate: User | null = await userRepository.findOne({
+    where:{
+      reset_password: randomUUID,
+    }
   });
 
   if (userToUpdate) {
