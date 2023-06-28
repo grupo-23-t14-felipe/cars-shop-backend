@@ -1,38 +1,52 @@
 import { AppDataSource } from "../../data-source";
 import { Car, User } from "../../entities";
 import { ICarRepo } from "../../interfaces/cars.interfaces";
-import { IUserRepo } from "../../interfaces/user.interface";
+import {
+  IUserRepo,
+  IUserResponseListCar,
+} from "../../interfaces/user.interface";
 import { MultipleCarResponseSchema } from "../../schemas/cars.schemas";
+import { UserResponseListCarsSchema } from "../../schemas/users.schemas";
 
 export const listCarByUserIdService = async (
   searchedUserUUID: string,
-  loggedUserUUID: string | null
-): Promise<any> => {
+  loggedUserUUID: string | null,
+  page: number
+): Promise<IUserResponseListCar> => {
   const carRepository: ICarRepo = AppDataSource.getRepository(Car);
   const userRepository: IUserRepo = AppDataSource.getRepository(User);
 
   const searchedUser = await userRepository.findOneByOrFail({
     uuid: searchedUserUUID,
   });
-  const queryBuilder = carRepository.createQueryBuilder("car");
-  if (searchedUserUUID === loggedUserUUID) {
-    const cars = await queryBuilder
-      .leftJoinAndSelect("car.user", "user")
-      .leftJoinAndSelect("car.gallery", "gallery")
-      .where("user.uuid = :searchedUserUUID", { searchedUserUUID })
-      .getMany();
 
-    const parsedCars = MultipleCarResponseSchema.parse(cars);
+  if (!page) page = 1;
+
+  const itemsPerPage = 12;
+  const offset = (page - 1) * itemsPerPage;
+
+  const queryBuilder = userRepository.createQueryBuilder("user");
+
+  if (searchedUserUUID === loggedUserUUID) {
+    const user = await queryBuilder
+      .leftJoinAndSelect("user.cars", "cars")
+      .leftJoinAndSelect("cars.gallery", "gallery")
+      .where("user.uuid = :searchedUserUUID", { searchedUserUUID })
+      .getOne();
+
+    const parsedCars = UserResponseListCarsSchema.parse(user);
+
     return parsedCars;
   } else {
-    const cars = await queryBuilder
-      .leftJoinAndSelect("car.user", "user")
-      .leftJoinAndSelect("car.gallery", "gallery")
+    const user = await queryBuilder
+      .leftJoinAndSelect("user.cars", "cars")
+      .leftJoinAndSelect("cars.gallery", "gallery")
       .where("user.uuid = :searchedUserUUID", { searchedUserUUID })
-      .andWhere("car.is_active = :isActive", { isActive: true })
-      .getMany();
+      .andWhere("cars.is_active = :isActive", { isActive: true })
+      .getOne();
 
-    const parsedCars = MultipleCarResponseSchema.parse(cars);
+    const parsedCars = UserResponseListCarsSchema.parse(user);
+
     return parsedCars;
   }
 };

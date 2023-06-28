@@ -30,6 +30,12 @@ const UserSchema = z.object({
         value: z.string(),
         description: z.string(),
         img_default: z.string(),
+        gallery: z.array(
+          z.object({
+            uuid: z.string(),
+            imageUrl: z.string(),
+          })
+        ),
       })
     )
     .optional(),
@@ -60,8 +66,13 @@ const UserLoginResponseSchema = z.object({
   token: z.string(),
 });
 
-const UserUpdateRequestSchema = UserCreateRequestSchema.partial({
-  
+const UserUpdateRequestSchema = UserCreateRequestSchema.partial({});
+
+const UserResponseListCarsSchema = UserSchema.omit({
+  password: true,
+  reset_password: true,
+  address: true,
+  comments: true,
 });
 
 const UserResponseSchema = UserSchema.omit({
@@ -74,8 +85,8 @@ const UserResponseSchema = UserSchema.omit({
   birthday: true,
   is_seller: true,
   reset_password: true,
-  email: true
-})
+  email: true,
+});
 
 export {
   UserSchema,
@@ -86,4 +97,5 @@ export {
   UserCreateRequestSchema,
   UserCreateResponseSchema,
   UserUpdateRequestSchema,
+  UserResponseListCarsSchema,
 };

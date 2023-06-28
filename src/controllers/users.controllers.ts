@@ -21,9 +21,11 @@ export const listCarByUserIdController = async (
   req: Request,
   res: Response
 ): Promise<Response> => {
+  const page = Number(req.query.page);
   const carList = await listCarByUserIdService(
     req.params.userUUID,
-    req.user.uuid
+    req.user.uuid,
+    page
   );
   return res.status(200).json(carList);
 };

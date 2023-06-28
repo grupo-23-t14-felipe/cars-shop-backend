@@ -6,6 +6,7 @@ import {
   UserCreateResponseSchema,
   UserLoginResponseSchema,
   UserLoginSchema,
+  UserResponseListCarsSchema,
   UserSchema,
   UserUpdateRequestSchema,
 } from "../schemas/users.schemas";
@@ -18,3 +19,4 @@ export type IUserResponse = z.infer<typeof UserCreateResponseSchema>;
 export type IUserLogin = z.infer<typeof UserLoginSchema>;
 export type IUserLoginResponse = z.infer<typeof UserLoginResponseSchema>;
 export type IUserUpdateRequest = z.infer<typeof UserUpdateRequestSchema>;
+export type IUserResponseListCar = z.infer<typeof UserResponseListCarsSchema>;
