@@ -51,6 +51,7 @@ const UserCreateRequestSchema = UserSchema.omit({
   address: AddressCreateSchema,
 });
 const UserCreateResponseSchema = UserSchema.omit({
+  cars: true,
   password: true,
 });
 const UserRelatedSchema = UserSchema.omit({

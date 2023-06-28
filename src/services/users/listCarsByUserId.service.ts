@@ -1,5 +1,6 @@
 import { AppDataSource } from "../../data-source";
-import { User } from "../../entities";
+import { Car, User } from "../../entities";
+import { ICarRepo } from "../../interfaces/cars.interfaces";
 import {
   IUserRepo,
   IUserResponseListCar,
@@ -13,6 +14,7 @@ export const listCarByUserIdService = async (
   page: number
 ): Promise<{ count: number; page: number; data: IUserResponseListCar }> => {
   const userRepository: IUserRepo = AppDataSource.getRepository(User);
+  const carRepository: ICarRepo = AppDataSource.getRepository(Car);
 
   const searchedUser = await userRepository.findOneByOrFail({
     uuid: searchedUserUUID,
@@ -24,14 +26,12 @@ export const listCarByUserIdService = async (
   const offset = (page - 1) * itemsPerPage;
 
   const queryBuilder = userRepository.createQueryBuilder("user");
+  const countQueryBuilder = carRepository.createQueryBuilder("cars");
 
   if (searchedUserUUID === loggedUserUUID) {
-    const countQueryBuilder = await queryBuilder
-      .leftJoinAndSelect("user.cars", "cars")
-      .leftJoinAndSelect("cars.gallery", "gallery")
+    const count = await countQueryBuilder
+      .leftJoinAndSelect("cars.user", "user")
       .where("user.uuid = :searchedUserUUID", { searchedUserUUID })
-      .skip(offset)
-      .take(itemsPerPage)
       .getCount();
 
     const user = await queryBuilder
@@ -42,11 +42,10 @@ export const listCarByUserIdService = async (
 
     const parsedCars = UserResponseListCarsSchema.parse(user);
 
-    return { count: countQueryBuilder, page: page, data: parsedCars };
+    return { count: count, page: page, data: parsedCars };
   } else {
-    const countQueryBuilder = await queryBuilder
-      .leftJoinAndSelect("user.cars", "cars")
-      .leftJoinAndSelect("cars.gallery", "gallery")
+    const count = await countQueryBuilder
+      .leftJoinAndSelect("cars.user", "user")
       .where("user.uuid = :searchedUserUUID", { searchedUserUUID })
       .andWhere("cars.is_active = :isActive", { isActive: true })
       .getCount();
@@ -62,6 +61,6 @@ export const listCarByUserIdService = async (
 
     const parsedCars = UserResponseListCarsSchema.parse(user);
 
-    return { count: countQueryBuilder, page: page, data: parsedCars };
+    return { count: count, page: page, data: parsedCars };
   }
 };
