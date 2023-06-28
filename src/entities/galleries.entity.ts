@@ -15,6 +15,6 @@ export class Gallery {
   @Column({ type: "text", nullable: true })
   imageUrl: string | null | undefined;
 
-  @ManyToOne(() => Car, (car) => car.gallery)
+  @ManyToOne(() => Car, (car) => car.gallery, { onDelete: "CASCADE" })
   car: Car;
 }

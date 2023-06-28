@@ -63,22 +63,31 @@ const CarResponseSchema = z.object({
   is_active: z.boolean(),
   value: z.string(),
   description: z.string(),
-  user: UserResponseSchema
-})
+  user: UserResponseSchema,
+});
 
 const retrieveCarSchema = CarResponseSchema.extend({
-  gallery: z.array(z.object({
-    uuid: z.string(),
-    imageUrl: z.string()
-  })).optional(),
-  comments: z.array(z.object({
-    uuid: z.string(),
-    addedIn: z.string(),
-    description: z.string()
-  })).optional()
-})
+  gallery: z
+    .array(
+      z.object({
+        uuid: z.string(),
+        imageUrl: z.string(),
+      })
+    )
+    .optional(),
+  comments: z
+    .array(
+      z.object({
+        uuid: z.string(),
+        addedIn: z.string(),
+        user: UserResponseSchema,
+        description: z.string(),
+      })
+    )
+    .optional(),
+});
 
-const MultipleCarResponseSchema = retrieveCarSchema.array()
+const MultipleCarResponseSchema = retrieveCarSchema.array();
 
 export {
   retrieveCarSchema,
@@ -90,5 +99,5 @@ export {
   CarUpdateRequestSchema,
   CarCreateRequestWithotGallerySchema,
   CarUpdateRequestRequiredSchema,
-  CarResponseSchema
+  CarResponseSchema,
 };
