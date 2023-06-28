@@ -12,8 +12,7 @@ export const listCarByUserIdService = async (
   searchedUserUUID: string,
   loggedUserUUID: string | null,
   page: number
-): Promise<IUserResponseListCar> => {
-  const carRepository: ICarRepo = AppDataSource.getRepository(Car);
+): Promise<{ count: number; page: number; data: IUserResponseListCar }> => {
   const userRepository: IUserRepo = AppDataSource.getRepository(User);
 
   const searchedUser = await userRepository.findOneByOrFail({
@@ -28,6 +27,14 @@ export const listCarByUserIdService = async (
   const queryBuilder = userRepository.createQueryBuilder("user");
 
   if (searchedUserUUID === loggedUserUUID) {
+    const countQueryBuilder = await queryBuilder
+      .leftJoinAndSelect("user.cars", "cars")
+      .leftJoinAndSelect("cars.gallery", "gallery")
+      .where("user.uuid = :searchedUserUUID", { searchedUserUUID })
+      .skip(offset)
+      .take(itemsPerPage)
+      .getCount();
+
     const user = await queryBuilder
       .leftJoinAndSelect("user.cars", "cars")
       .leftJoinAndSelect("cars.gallery", "gallery")
@@ -36,17 +43,26 @@ export const listCarByUserIdService = async (
 
     const parsedCars = UserResponseListCarsSchema.parse(user);
 
-    return parsedCars;
+    return { count: countQueryBuilder, page: page, data: parsedCars };
   } else {
+    const countQueryBuilder = await queryBuilder
+      .leftJoinAndSelect("user.cars", "cars")
+      .leftJoinAndSelect("cars.gallery", "gallery")
+      .where("user.uuid = :searchedUserUUID", { searchedUserUUID })
+      .andWhere("cars.is_active = :isActive", { isActive: true })
+      .getCount();
+
     const user = await queryBuilder
       .leftJoinAndSelect("user.cars", "cars")
       .leftJoinAndSelect("cars.gallery", "gallery")
       .where("user.uuid = :searchedUserUUID", { searchedUserUUID })
       .andWhere("cars.is_active = :isActive", { isActive: true })
+      .skip(offset)
+      .take(itemsPerPage)
       .getOne();
 
     const parsedCars = UserResponseListCarsSchema.parse(user);
 
-    return parsedCars;
+    return { count: countQueryBuilder, page: page, data: parsedCars };
   }
 };
