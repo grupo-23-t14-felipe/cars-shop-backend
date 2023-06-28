@@ -1,5 +1,4 @@
 import { z } from "zod";
-import { CarSchema } from "./cars.schemas";
 import { AddressCreateSchema, AddressSchema } from "./address.schemas";
 
 const UserSchema = z.object({
@@ -74,6 +73,17 @@ const UserResponseListCarsSchema = UserSchema.omit({
   reset_password: true,
   address: true,
   comments: true,
+}).extend({
+  cars: z.array(
+    z
+      .object({
+        user: UserRelatedSchema.omit({
+          password: true,
+          reset_password: true,
+        }),
+      })
+      .nonstrict()
+  ),
 });
 
 const UserResponseSchema = UserSchema.omit({

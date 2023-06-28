@@ -1,5 +1,6 @@
 import { AppDataSource } from "../../data-source";
 import { Car, User } from "../../entities";
+import AppError from "../../errors/appError";
 import { ICarRepo } from "../../interfaces/cars.interfaces";
 import {
   IUserRepo,
@@ -16,48 +17,58 @@ export const listCarByUserIdService = async (
   const userRepository: IUserRepo = AppDataSource.getRepository(User);
   const carRepository: ICarRepo = AppDataSource.getRepository(Car);
 
-  const searchedUser = await userRepository.findOneByOrFail({
-    uuid: searchedUserUUID,
+  const queryBuilder = userRepository.createQueryBuilder("user");
+  const countQueryBuilder = carRepository.createQueryBuilder("car");
+
+  const find = await userRepository.findOne({
+    where: {
+      uuid: searchedUserUUID,
+    },
   });
+
+  if (!find) throw new AppError("User not found.", 404);
 
   if (!page) page = 1;
 
   const itemsPerPage = 12;
   const offset = (page - 1) * itemsPerPage;
 
-  const queryBuilder = userRepository.createQueryBuilder("user");
-  const countQueryBuilder = carRepository.createQueryBuilder("cars");
-
   if (searchedUserUUID === loggedUserUUID) {
     const count = await countQueryBuilder
-      .leftJoinAndSelect("cars.user", "user")
+      .leftJoinAndSelect("car.user", "user")
       .where("user.uuid = :searchedUserUUID", { searchedUserUUID })
       .getCount();
 
-    const user = await queryBuilder
-      .leftJoinAndSelect("user.cars", "cars")
-      .leftJoinAndSelect("cars.gallery", "gallery")
-      .where("user.uuid = :searchedUserUUID", { searchedUserUUID })
-      .getOne();
+    const cars = await carRepository
+      .createQueryBuilder("car")
+      .leftJoinAndSelect("car.gallery", "g")
+      .leftJoinAndSelect("car.user", "user")
+      .skip(offset)
+      .take(itemsPerPage)
+      .getMany();
+
+    const user = { ...find, cars: cars };
 
     const parsedCars = UserResponseListCarsSchema.parse(user);
 
     return { count: count, page: page, data: parsedCars };
   } else {
     const count = await countQueryBuilder
-      .leftJoinAndSelect("cars.user", "user")
+      .leftJoinAndSelect("car.user", "user")
       .where("user.uuid = :searchedUserUUID", { searchedUserUUID })
       .andWhere("cars.is_active = :isActive", { isActive: true })
       .getCount();
 
-    const user = await queryBuilder
-      .leftJoinAndSelect("user.cars", "cars")
-      .leftJoinAndSelect("cars.gallery", "gallery")
-      .where("user.uuid = :searchedUserUUID", { searchedUserUUID })
-      .andWhere("cars.is_active = :isActive", { isActive: true })
+    const cars = await carRepository
+      .createQueryBuilder("car")
+      .leftJoinAndSelect("car.gallery", "g")
+      .leftJoinAndSelect("car.user", "user")
+      .where("car.is_active = :isActive", { isActive: true })
       .skip(offset)
       .take(itemsPerPage)
-      .getOne();
+      .getMany();
+
+    const user = { ...find, cars: cars };
 
     const parsedCars = UserResponseListCarsSchema.parse(user);
 
