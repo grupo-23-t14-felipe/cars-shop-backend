@@ -1,11 +1,10 @@
 import { AppDataSource } from "../../data-source";
-import { Car, User } from "../../entities";
-import { ICarRepo } from "../../interfaces/cars.interfaces";
+import { User } from "../../entities";
 import {
   IUserRepo,
   IUserResponseListCar,
 } from "../../interfaces/user.interface";
-import { MultipleCarResponseSchema } from "../../schemas/cars.schemas";
+
 import { UserResponseListCarsSchema } from "../../schemas/users.schemas";
 
 export const listCarByUserIdService = async (
