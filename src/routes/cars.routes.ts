@@ -1,4 +1,5 @@
 import { Router } from "express";
+
 import {
   createCarController,
   listCarsController,
@@ -6,16 +7,26 @@ import {
   deleteCarController,
   listCarByUuidController,
 } from "../controllers/cars.controllers";
-import { validateDataMdwr } from "../middlewares/validateDataMiddleware";
+import {
+  createCommentController,
+  deleteCommentController,
+  updateCommentController,
+} from "../controllers/comments.controllers";
+import { deleteGalleryController } from "../controllers/gallery.controllers";
+
 import {
   CarCreateRequestSchema,
   CarUpdateRequestSchema,
 } from "../schemas/cars.schemas";
+
+import { validateDataMdwr } from "../middlewares/validateDataMiddleware";
 import { ensureCarExistsMdwr } from "../middlewares/cars/ensureCarExists.middleware";
 import verifyTokenIsValidMiddleware from "../middlewares/session/verifyTokenIsValidMiddleware";
 import { checkOwnershipMiddleware } from "../middlewares/cars/ownership.middleware";
-import { createCommentController, deleteCommentController, updateCommentController } from "../controllers/comments.controllers";
-import { commentCreateSchema, commentUpdateSchema } from "../schemas/comments.schemas";
+import {
+  commentCreateSchema,
+  commentUpdateSchema,
+} from "../schemas/comments.schemas";
 
 export const carsRouter = Router();
 
@@ -45,18 +56,27 @@ carsRouter.delete(
 );
 
 carsRouter.post(
-  "/comments/:carUUID", 
+  "/comments/:carUUID",
   validateDataMdwr(commentCreateSchema),
   verifyTokenIsValidMiddleware,
-  createCommentController)
+  createCommentController
+);
 
 carsRouter.patch(
-"/comments/:commentUUID", 
+  "/comments/:commentUUID",
   validateDataMdwr(commentUpdateSchema),
   verifyTokenIsValidMiddleware,
-  updateCommentController)
+  updateCommentController
+);
 
 carsRouter.delete(
-  "/comments/:commentUUID", 
+  "/comments/:commentUUID",
   verifyTokenIsValidMiddleware,
-  deleteCommentController)
+  deleteCommentController
+);
+
+carsRouter.delete(
+  "/gallery/:galleryUUID",
+  verifyTokenIsValidMiddleware,
+  deleteGalleryController
+);
