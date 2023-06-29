@@ -16,7 +16,6 @@ Para documentação completa acesse: https://group23-t14-felipe.onrender.com/doc
 - [Variáveis de Ambiente](#4-variáveis-de-ambiente)
 - [Migrations](#5-migrations)
 - [Integrantes](#6-integrantes)
-- [Endpoints](#7-endpoints)
 
 ---
 
