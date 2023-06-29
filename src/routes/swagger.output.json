@@ -1,0 +1,1173 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Projeto FullStack, Módulo 6 - Group23-t14",
+    "description": "Motors Shop - Group23-t14-felipe",
+    "version": "1.0.0"
+  },
+  "host": "localhost:3000",
+  "basePath": "/",
+  "schemes": ["http"],
+  "paths": {
+    "/login": {
+      "post": {
+        "summary": "Log in",
+        "parameters": [],
+        "tags": ["Login"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "value": {
+                  "email": "string",
+                  "password": "string"
+                }
+              },
+              "examples": {
+                "success": {
+                  "value": {
+                    "email": "motorsShop@kenzie.com",
+                    "password": "123456@Ab"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "success": {
+                    "value": {
+                      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "error": {
+                    "value": {
+                      "message": "Invalid credentials"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/cars": {
+      "post": {
+        "summary": "Register car",
+        "description": "",
+        "tags": ["Cars"],
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "success": {
+                    "value": {
+                      "uuid": "string",
+                      "brand": "string",
+                      "model": "string",
+                      "year": "number",
+                      "fuel_type": "string",
+                      "mileage": "number",
+                      "color": "string",
+                      "img_default": "string",
+                      "is_good_deal": "boolean",
+                      "is_active": "boolean",
+                      "value": "number",
+                      "description": "string",
+                      "user": {
+                        "uuid": "string",
+                        "name": "string",
+                        "email": "string",
+                        "password": "string",
+                        "cpf": "string",
+                        "celphone": "string",
+                        "birthday": "string",
+                        "description": "string",
+                        "imageUrl": "string",
+                        "is_seller": "boolean",
+                        "address": "string"
+                      },
+                      "comments": [
+                        {
+                          "uuid": "string",
+                          "description": "Lorem...",
+                          "addedIn": "date",
+                          "user": "uuid"
+                        }
+                      ],
+                      "gallery": [
+                        {
+                          "uuid": "string",
+                          "imageUrl": "string"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "error": {
+                    "value": {
+                      "message": "message: ..."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "summary": "List cars",
+        "description": "List all cars active",
+        "tags": ["Cars"],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "success": {
+                    "value": [
+                      {
+                        "uuid": "string",
+                        "brand": "string",
+                        "model": "string",
+                        "year": "number",
+                        "fuel_type": "string",
+                        "mileage": "number",
+                        "color": "string",
+                        "img_default": "string",
+                        "is_good_deal": "boolean",
+                        "is_active": "boolean",
+                        "value": "number",
+                        "description": "string",
+                        "user": {
+                          "uuid": "string",
+                          "name": "string",
+                          "email": "string",
+                          "cpf": "string",
+                          "celphone": "string",
+                          "birthday": "string",
+                          "description": "string",
+                          "imageUrl": "string",
+                          "is_seller": "boolean",
+                          "address": "string"
+                        },
+                        "gallery": [
+                          {
+                            "uuid": "string",
+                            "imageUrl": "string"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/cars/{carUUID}": {
+      "get": {
+        "summary": "Retrieve a car by uuid",
+        "description": "Search a unique car",
+        "tags": ["Cars"],
+        "parameters": [
+          {
+            "name": "carUUID",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "success": {
+                    "value": [
+                      {
+                        "uuid": "string",
+                        "brand": "string",
+                        "model": "string",
+                        "year": "number",
+                        "fuel_type": "string",
+                        "mileage": "number",
+                        "color": "string",
+                        "img_default": "string",
+                        "is_good_deal": "boolean",
+                        "is_active": "boolean",
+                        "value": "number",
+                        "description": "string",
+                        "user": {
+                          "uuid": "string",
+                          "name": "string",
+                          "email": "string",
+                          "cpf": "string",
+                          "celphone": "string",
+                          "birthday": "string",
+                          "description": "string",
+                          "imageUrl": "string",
+                          "is_seller": "boolean",
+                          "address": "string"
+                        },
+                        "comments": [
+                          {
+                            "uuid": "string",
+                            "addedIn": "date",
+                            "description": "string",
+                            "user": "string"
+                          }
+                        ],
+                        "gallery": [
+                          {
+                            "uuid": "string",
+                            "imageUrl": "string"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "error": {
+                    "value": {
+                      "message": "Invalid credentials"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "error": {
+                    "value": {
+                      "message": "Car not found"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "summary": "Update a car by uuid",
+        "description": "Update a unique car",
+        "tags": ["Cars"],
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "carUUID",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "success": {
+                    "value": {
+                      "uuid": "string",
+                      "brand": "string",
+                      "model": "string",
+                      "year": "number",
+                      "fuel_type": "string",
+                      "mileage": "number",
+                      "color": "string",
+                      "img_default": "string",
+                      "is_good_deal": "boolean",
+                      "is_active": "boolean",
+                      "value": "number",
+                      "description": "string",
+                      "user": {
+                        "uuid": "string",
+                        "name": "string",
+                        "email": "string",
+                        "cpf": "string",
+                        "celphone": "string",
+                        "birthday": "string",
+                        "description": "string",
+                        "imageUrl": "string",
+                        "is_seller": "boolean",
+                        "address": "string"
+                      },
+                      "comments": [
+                        {
+                          "uuid": "string",
+                          "addedIn": "date",
+                          "description": "string",
+                          "user": "string"
+                        }
+                      ],
+                      "gallery": [
+                        {
+                          "uuid": "string",
+                          "imageUrl": "string"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "error": {
+                    "value": {
+                      "message": "Invalid token"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "error": {
+                    "value": {
+                      "message": "Car not found"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a car by uuid",
+        "description": "Search and delete the car by uuid",
+        "tags": ["Cars"],
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "carUUID",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "success": {
+                    "value": []
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "error": {
+                    "value": {
+                      "message": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "error": {
+                    "value": {
+                      "message": "Car not found"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/cars/comments/{carUUID}": {
+      "post": {
+        "summary": "Create a comment",
+        "description": "Create a comment to car",
+        "tags": ["Comments"],
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "carUUID",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "success": {
+                    "value": {
+                      "description": "string",
+                      "user": { "uuid": "string" },
+                      "uuid": "string",
+                      "car": { "uuid": "string" }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/cars/comments/{commentUUID}": {
+      "patch": {
+        "summary": "Update a comment",
+        "description": "Update a comment by commentUUID",
+        "tags": ["Comments"],
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "commentUUID",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "success": {
+                    "value": {
+                      "description": "string",
+                      "user": { "uuid": "string" },
+                      "uuid": "string",
+                      "car": { "uuid": "string" }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "error": {
+                    "value": {
+                      "message": "Comment not found"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a unique comment",
+        "description": "Delte a unique comment by commentUUID",
+        "tags": ["Comments"],
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "commentUUID",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "error": {
+                    "value": []
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/cars/gallery/{galleryUUID}": {
+      "delete": {
+        "summary": "Delete a image",
+        "description": "Delete a image by uuid",
+        "tags": ["Gallery"],
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "commentUUID",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "success": {
+                    "value": []
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Image not found"
+          }
+        }
+      }
+    },
+    "/users": {
+      "post": {
+        "summary": "Create a user",
+        "description": "Create a user",
+        "tags": ["Users"],
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "success": {
+                    "value": {
+                      "uuid": "string",
+                      "name": "string",
+                      "email": "string",
+                      "cpf": "string",
+                      "celphone": "string",
+                      "birthday": "string",
+                      "description": "string",
+                      "imageUrl": "string",
+                      "is_seller": "boolean",
+                      "address": {
+                        "uuid": "string",
+                        "cep": "string",
+                        "state": "string",
+                        "street": "string",
+                        "city": "string",
+                        "number": "string",
+                        "complement": "string"
+                      },
+                      "reset_password": null
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/{userUUID}": {
+      "get": {
+        "summary": "Retrieve User",
+        "description": "Retrieve a user by userUUId",
+        "tags": ["Users"],
+        "parameters": [
+          {
+            "name": "userUUID",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "success": {
+                    "value": {
+                      "uuid": "string",
+                      "name": "string",
+                      "email": "string",
+                      "cpf": "string",
+                      "celphone": "string",
+                      "birthday": "string",
+                      "description": "string",
+                      "imageUrl": "string",
+                      "is_seller": "boolean",
+                      "address": {
+                        "uuid": "string",
+                        "cep": "string",
+                        "state": "string",
+                        "street": "string",
+                        "city": "string",
+                        "number": "string",
+                        "complement": "string"
+                      },
+                      "reset_password": null
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "error": {
+                    "value": {
+                      "message": "Missing bearer token"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "summary": "Update a user",
+        "description": "Update a user by userUUID",
+        "tags": ["Users"],
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "userUUID",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "success": {
+                    "value": {
+                      "uuid": "string",
+                      "name": "string",
+                      "email": "string",
+                      "cpf": "string",
+                      "celphone": "string",
+                      "birthday": "string",
+                      "description": "string",
+                      "imageUrl": "string",
+                      "is_seller": "boolean",
+                      "address": {
+                        "uuid": "string",
+                        "cep": "string",
+                        "state": "string",
+                        "street": "string",
+                        "city": "string",
+                        "number": "string",
+                        "complement": "string"
+                      },
+                      "reset_password": null
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "error": {
+                    "value": {
+                      "message": "Missing bearer token"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "error": {
+                    "value": {
+                      "message": "User not found"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a unique user",
+        "description": "Delete unique user by userUUID",
+        "tags": ["Users"],
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "userUUID",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "success": {
+                    "value": []
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "error": {
+                    "value": {
+                      "message": "Missing bearer token"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "error": {
+                    "value": {
+                      "message": "User not found"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/cars/{userUUID}": {
+      "get": {
+        "summary": "Search cars by user uuid",
+        "description": "this route get the all cars active and inative(if bearer token equal owner user), but return all cars active(if bearer token null)",
+        "tags": ["Users"],
+        "parameters": [
+          {
+            "name": "userUUID",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "number page",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "success": {
+                    "value": {
+                      "user": {
+                        "uuid": "string",
+                        "name": "string",
+                        "email": "string",
+                        "cpf": "string",
+                        "celphone": "string",
+                        "birthday": "string",
+                        "description": "string",
+                        "imageUrl": "string",
+                        "is_seller": "boolean",
+                        "address": "string",
+                        "cars": [
+                          {
+                            "uuid": "string",
+                            "brand": "string",
+                            "model": "string",
+                            "year": "number",
+                            "fuel_type": "string",
+                            "mileage": "number",
+                            "color": "string",
+                            "img_default": "string",
+                            "is_good_deal": "boolean",
+                            "is_active": "boolean",
+                            "value": "number",
+                            "description": "string",
+                            "user": {
+                              "uuid": "string",
+                              "name": "string"
+                            },
+                            "gallery": [
+                              {
+                                "uuid": "string",
+                                "imageUrl": "string"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "error": {
+                    "value": {
+                      "message": "User not found"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/reset-password": {
+      "post": {
+        "summary": "If you forget the password...",
+        "description": "here you send your email to receive a link in your email to reset a password",
+        "tags": ["Reset Password"],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "success": {
+                    "value": {
+                      "message": "Email send with success"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "error": {
+                    "value": {
+                      "message": "User not found"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/reset-password/{randomUUID}": {
+      "patch": {
+        "summary": "Reset Password by token in path",
+        "description": "After you send your email to system, and get the link with token",
+        "tags": ["Reset Password"],
+        "parameters": [
+          {
+            "name": "randomUUID",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "success": {
+                    "value": {
+                      "uuid": "string",
+                      "name": "string",
+                      "email": "string",
+                      "cpf": "string",
+                      "celphone": "string",
+                      "birthday": "string",
+                      "description": "string",
+                      "imageUrl": "string",
+                      "is_seller": "boolean",
+                      "reset_password": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "error": {
+                    "value": {
+                      "message": "User not found"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/address/{userUUID}": {
+      "patch": {
+        "summary": "Update address of the user by userUUID",
+        "description": "you can update some field in your address",
+        "tags": ["Address"],
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "userUUID",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "success": {
+                    "value": {
+                      "uuid": "string",
+                      "cep": "string",
+                      "state": "string",
+                      "street": "string",
+                      "city": "string",
+                      "number": "string",
+                      "complement": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "error": {
+                    "value": {
+                      "message": "Missing bearer token"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "error": {
+                    "value": {
+                      "message": "User not found"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}
