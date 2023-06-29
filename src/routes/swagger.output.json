@@ -627,11 +627,33 @@
               }
             }
           },
-          "403": {
-            "description": "Forbidden"
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "error": {
+                    "value": {
+                      "message": "Missing bearer token"
+                    }
+                  }
+                }
+              }
+            }
           },
           "404": {
-            "description": "Image not found"
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "error": {
+                    "value": {
+                      "message": "Image not found"
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
