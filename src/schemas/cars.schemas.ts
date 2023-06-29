@@ -2,7 +2,6 @@ import { z } from "zod";
 import { fuelType } from "../entities/cars.entity";
 import { gallerySchema } from "./gallery.schemas";
 import { UserResponseSchema } from "./users.schemas";
-import { commentResponse, commentSchema } from "./comments.schemas";
 
 const FuelType = z.enum([fuelType.flex, fuelType.hybrid, fuelType.eletric]);
 
@@ -21,29 +20,29 @@ const CarSchema = z.object({
   description: z.string(),
   user: z.object({}),
   comments: z.array(z.object({})).optional(),
-  gallery: z.array(z.string()),
+  gallery: z.array(z.string())
 });
 
 const CarReturnSchema = CarSchema.omit({
-  gallery: true,
+  gallery: true
 }).extend({
-  gallery: z.array(gallerySchema.required()),
+  gallery: z.array(gallerySchema.required())
 });
 
 const CarCreateSchema = CarSchema.omit({
   uuid: true,
   user: true,
-  comments: true,
+  comments: true
 });
 
 const CarCreateRequestSchema = CarCreateSchema.omit({
-  is_good_deal: true,
+  is_good_deal: true
 }).extend({
-  fipe_price: z.number(),
+  fipe_price: z.number()
 });
 
 const CarCreateRequestWithotGallerySchema = CarCreateSchema.omit({
-  gallery: true,
+  gallery: true
 });
 
 const CarUpdateRequestSchema = CarCreateRequestSchema.partial();
@@ -63,7 +62,7 @@ const CarResponseSchema = z.object({
   is_active: z.boolean(),
   value: z.string(),
   description: z.string(),
-  user: UserResponseSchema,
+  user: UserResponseSchema
 });
 
 const retrieveCarSchema = CarResponseSchema.extend({
@@ -71,7 +70,7 @@ const retrieveCarSchema = CarResponseSchema.extend({
     .array(
       z.object({
         uuid: z.string(),
-        imageUrl: z.string(),
+        imageUrl: z.string()
       })
     )
     .optional(),
@@ -81,10 +80,10 @@ const retrieveCarSchema = CarResponseSchema.extend({
         uuid: z.string(),
         addedIn: z.string(),
         user: UserResponseSchema,
-        description: z.string(),
+        description: z.string()
       })
     )
-    .optional(),
+    .optional()
 });
 
 const MultipleCarResponseSchema = retrieveCarSchema.array();
@@ -99,5 +98,5 @@ export {
   CarUpdateRequestSchema,
   CarCreateRequestWithotGallerySchema,
   CarUpdateRequestRequiredSchema,
-  CarResponseSchema,
+  CarResponseSchema
 };

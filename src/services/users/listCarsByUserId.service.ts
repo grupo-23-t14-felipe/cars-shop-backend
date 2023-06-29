@@ -2,10 +2,7 @@ import { AppDataSource } from "../../data-source";
 import { Car, User } from "../../entities";
 import AppError from "../../errors/appError";
 import { ICarRepo } from "../../interfaces/cars.interfaces";
-import {
-  IUserRepo,
-  IUserResponseListCar,
-} from "../../interfaces/user.interface";
+import { IUserRepo, IUserResponseListCar } from "../../interfaces/user.interface";
 
 import { UserResponseListCarsSchema } from "../../schemas/users.schemas";
 
@@ -22,8 +19,8 @@ export const listCarByUserIdService = async (
 
   const find = await userRepository.findOne({
     where: {
-      uuid: searchedUserUUID,
-    },
+      uuid: searchedUserUUID
+    }
   });
 
   if (!find) throw new AppError("User not found.", 404);

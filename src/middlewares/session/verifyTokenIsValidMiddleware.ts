@@ -12,7 +12,7 @@ const verifyTokenIsValidMiddleware = (
 
   if (!token && req.originalUrl.includes(`users/cars/${req.params.userUUID}`)) {
     req.user = {
-      uuid: "",
+      uuid: ""
     };
     return next();
   }
@@ -29,7 +29,7 @@ const verifyTokenIsValidMiddleware = (
     }
 
     req.user = {
-      uuid: String(decoded.sub),
+      uuid: String(decoded.sub)
     };
 
     return next();

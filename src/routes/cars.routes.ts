@@ -5,28 +5,22 @@ import {
   listCarsController,
   updateCarController,
   deleteCarController,
-  listCarByUuidController,
+  listCarByUuidController
 } from "../controllers/cars.controllers";
 import {
   createCommentController,
   deleteCommentController,
-  updateCommentController,
+  updateCommentController
 } from "../controllers/comments.controllers";
 import { deleteGalleryController } from "../controllers/gallery.controllers";
 
-import {
-  CarCreateRequestSchema,
-  CarUpdateRequestSchema,
-} from "../schemas/cars.schemas";
+import { CarCreateRequestSchema, CarUpdateRequestSchema } from "../schemas/cars.schemas";
 
 import { validateDataMdwr } from "../middlewares/validateDataMiddleware";
 import { ensureCarExistsMdwr } from "../middlewares/cars/ensureCarExists.middleware";
 import verifyTokenIsValidMiddleware from "../middlewares/session/verifyTokenIsValidMiddleware";
 import { checkOwnershipMiddleware } from "../middlewares/cars/ownership.middleware";
-import {
-  commentCreateSchema,
-  commentUpdateSchema,
-} from "../schemas/comments.schemas";
+import { commentCreateSchema, commentUpdateSchema } from "../schemas/comments.schemas";
 
 export const carsRouter = Router();
 
@@ -36,7 +30,9 @@ carsRouter.post(
   validateDataMdwr(CarCreateRequestSchema),
   createCarController
 );
+
 carsRouter.get("", listCarsController);
+
 carsRouter.get("/:carUUID", listCarByUuidController);
 
 carsRouter.patch(
@@ -47,6 +43,7 @@ carsRouter.patch(
   validateDataMdwr(CarUpdateRequestSchema),
   updateCarController
 );
+
 carsRouter.delete(
   "/:carUUID",
   verifyTokenIsValidMiddleware,
@@ -69,14 +66,6 @@ carsRouter.patch(
   updateCommentController
 );
 
-carsRouter.delete(
-  "/comments/:commentUUID",
-  verifyTokenIsValidMiddleware,
-  deleteCommentController
-);
+carsRouter.delete("/comments/:commentUUID", verifyTokenIsValidMiddleware, deleteCommentController);
 
-carsRouter.delete(
-  "/gallery/:galleryUUID",
-  verifyTokenIsValidMiddleware,
-  deleteGalleryController
-);
+carsRouter.delete("/gallery/:galleryUUID", verifyTokenIsValidMiddleware, deleteGalleryController);

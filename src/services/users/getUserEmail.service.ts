@@ -1,5 +1,5 @@
-import { createTransport } from "nodemailer";
 import "dotenv/config";
+import { createTransport } from "nodemailer";
 import { AppDataSource } from "../../data-source";
 import { IUserRepo } from "../../interfaces/user.interface";
 import { User } from "../../entities";
@@ -10,19 +10,17 @@ import AppError from "../../errors/appError";
 const sendEmailService = async (to: string): Promise<any> => {
   const transporter = createTransport({
     host: "smtp.gmail.com",
-    // port: 587,
-    // secure: false,
     auth: {
       user: process.env.SMTP_USER,
-      pass: process.env.SMTP_PASS,
-    },
+      pass: process.env.SMTP_PASS
+    }
   });
   const userRepository: IUserRepo = AppDataSource.getRepository(User);
 
   const user = await userRepository.findOne({
     where: {
-      email: to,
-    },
+      email: to
+    }
   });
 
   if (!user) {
@@ -33,7 +31,7 @@ const sendEmailService = async (to: string): Promise<any> => {
 
   const updatedUserInfo = {
     ...user,
-    reset_password: resetToken,
+    reset_password: resetToken
   };
 
   const updatedUser = userRepository.create(updatedUserInfo);
@@ -49,20 +47,19 @@ const sendEmailService = async (to: string): Promise<any> => {
         button: {
           color: "#DC4D2F",
           text: "Reset your password",
-          link: `http://localhost:3000/resetPassword/${resetToken}`,
-        },
+          link: `http://localhost:3000/resetPassword/${resetToken}`
+        }
       },
-      outro:
-        "If you did not request a password reset, no further action is required on your part.",
-    },
+      outro: "If you did not request a password reset, no further action is required on your part."
+    }
   };
 
   const mailGenerator = new Mailgen({
     theme: "default",
     product: {
       name: "M6 T14",
-      link: "http://localhost:3000",
-    },
+      link: "http://localhost:3000"
+    }
   });
 
   const generate = mailGenerator.generate(email);
@@ -71,7 +68,7 @@ const sendEmailService = async (to: string): Promise<any> => {
     from: process.env.SMTP_USER,
     to: to,
     subject: "reset password",
-    html: generate,
+    html: generate
   });
 
   if (sendEmail) {

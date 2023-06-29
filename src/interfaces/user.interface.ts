@@ -8,7 +8,7 @@ import {
   UserLoginSchema,
   UserResponseListCarsSchema,
   UserSchema,
-  UserUpdateRequestSchema,
+  UserUpdateRequestSchema
 } from "../schemas/users.schemas";
 
 export type IUserRepo = Repository<User>;

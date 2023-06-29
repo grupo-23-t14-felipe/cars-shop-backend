@@ -2,24 +2,20 @@ import { AppDataSource } from "../../data-source";
 import { User } from "../../entities";
 import AppError from "../../errors/appError";
 import { IUserRepo } from "../../interfaces/user.interface";
-import { UserCreateResponseSchema } from "../../schemas/users.schemas";
 
-export const resetPasswordService = async (
-  newPassword: string,
-  randomUUID: string
-) => {
+export const resetPasswordService = async (newPassword: string, randomUUID: string) => {
   const userRepository: IUserRepo = AppDataSource.getRepository(User);
 
   const userToUpdate: User | null = await userRepository.findOne({
     where: {
-      reset_password: randomUUID,
-    },
+      reset_password: randomUUID
+    }
   });
 
   if (userToUpdate) {
     const updatedUserInfo = {
       ...userToUpdate!,
-      password: newPassword,
+      password: newPassword
     };
 
     const updatedUser = userRepository.create(updatedUserInfo);

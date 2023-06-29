@@ -1,24 +1,18 @@
 import { AppDataSource } from "../../data-source";
 import { Car, Gallery } from "../../entities";
 import AppError from "../../errors/appError";
-import {
-  ICarRepo,
-  ICarUpdateRequestRequired,
-} from "../../interfaces/cars.interfaces";
+import { ICarRepo, ICarUpdateRequestRequired } from "../../interfaces/cars.interfaces";
 
-export const updateCarService = async (
-  payload: ICarUpdateRequestRequired,
-  carUUID: string
-) => {
+export const updateCarService = async (payload: ICarUpdateRequestRequired, carUUID: string) => {
   const carRepository: ICarRepo = AppDataSource.getRepository(Car);
 
   const carToUpdate: Car | null = await carRepository.findOne({
     where: {
-      uuid: carUUID,
+      uuid: carUUID
     },
     relations: {
-      gallery: true,
-    },
+      gallery: true
+    }
   });
 
   if (!carToUpdate) {
@@ -33,7 +27,7 @@ export const updateCarService = async (
     for (let i = 0; i < payload.gallery.length; i++) {
       const createLinks = galleryRepo.create({
         imageUrl: payload.gallery[i],
-        car: carToUpdate,
+        car: carToUpdate
       });
       const response = await galleryRepo.save(createLinks);
       results.push(response);
@@ -43,14 +37,14 @@ export const updateCarService = async (
   let updatedCarInfo = {
     ...carToUpdate!,
     ...payload,
-    gallery: results,
+    gallery: results
   };
 
   if (carToUpdate.gallery.length > 0) {
     updatedCarInfo = {
       ...carToUpdate!,
       ...payload,
-      gallery: [...carToUpdate.gallery, ...results],
+      gallery: [...carToUpdate.gallery, ...results]
     };
   }
 
@@ -61,6 +55,7 @@ export const updateCarService = async (
   }
 
   const updatedCar = carRepository.create(updatedCarInfo);
+
   await carRepository.save(updatedCar);
 
   return updatedCar;

@@ -1,5 +1,4 @@
 import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
-import { string } from "zod";
 
 @Entity("adresses")
 export class Address {

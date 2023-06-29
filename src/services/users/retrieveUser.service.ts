@@ -3,18 +3,16 @@ import { User } from "../../entities";
 import { IUserRepo, IUserResponse } from "../../interfaces/user.interface";
 import { UserCreateResponseSchema } from "../../schemas/users.schemas";
 
-export const retrieveUserService = async (
-  userUUID: string
-): Promise<IUserResponse> => {
+export const retrieveUserService = async (userUUID: string): Promise<IUserResponse> => {
   const userRepository: IUserRepo = AppDataSource.getRepository(User);
   const user: User | null = await userRepository.findOne({
     where: {
-      uuid: userUUID,
+      uuid: userUUID
     },
     relations: {
       cars: true,
-      address: true,
-    },
+      address: true
+    }
   });
 
   const parsedUser = UserCreateResponseSchema.parse(user);

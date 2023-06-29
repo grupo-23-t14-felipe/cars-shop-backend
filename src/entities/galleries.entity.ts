@@ -1,10 +1,4 @@
-import {
-  Column,
-  Entity,
-  ManyToMany,
-  ManyToOne,
-  PrimaryGeneratedColumn,
-} from "typeorm";
+import { Column, Entity, ManyToMany, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Car } from "./cars.entity";
 
 @Entity("galleries")

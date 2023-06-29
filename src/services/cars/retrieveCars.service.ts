@@ -1,4 +1,4 @@
-import { ICarRepo, ICarRetrieve, ICarReturn } from "../../interfaces/cars.interfaces";
+import { ICarRepo, ICarRetrieve } from "../../interfaces/cars.interfaces";
 import { Car } from "../../entities";
 import { AppDataSource } from "../../data-source";
 import AppError from "../../errors/appError";
@@ -9,23 +9,23 @@ const retrieveCarService = async (uuid: string): Promise<ICarRetrieve> => {
 
   const find = await carRepository.findOne({
     where: {
-      uuid: uuid,
+      uuid: uuid
     },
     relations: {
       user: true,
       gallery: true,
       comments: {
-        user: true,
-      },
-    },
+        user: true
+      }
+    }
   });
 
   if (find === null) {
     throw new AppError("Car not found.", 404);
   }
 
-  const parsedCar = retrieveCarSchema.parse(find)
-  
+  const parsedCar = retrieveCarSchema.parse(find);
+
   return parsedCar;
 };
 

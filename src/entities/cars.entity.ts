@@ -1,10 +1,4 @@
-import {
-  Column,
-  Entity,
-  ManyToOne,
-  OneToMany,
-  PrimaryGeneratedColumn,
-} from "typeorm";
+import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { User } from "./user.entity";
 import { Comment } from "./comments.entity";
 import { Gallery } from "./galleries.entity";
@@ -12,7 +6,7 @@ import { Gallery } from "./galleries.entity";
 export enum fuelType {
   flex = "1",
   hybrid = "2",
-  eletric = "3",
+  eletric = "3"
 }
 
 @Entity("cars")

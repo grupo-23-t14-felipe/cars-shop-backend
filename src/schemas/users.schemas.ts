@@ -32,38 +32,38 @@ const UserSchema = z.object({
         gallery: z.array(
           z.object({
             uuid: z.string(),
-            imageUrl: z.string(),
+            imageUrl: z.string()
           })
-        ),
+        )
       })
     )
     .optional(),
-  comments: z.array(z.object({})).optional(),
+  comments: z.array(z.object({})).optional()
 });
 
 const UserCreateRequestSchema = UserSchema.omit({
   uuid: true,
   comments: true,
   cars: true,
-  address: true,
+  address: true
 }).extend({
-  address: AddressCreateSchema,
+  address: AddressCreateSchema
 });
 const UserCreateResponseSchema = UserSchema.omit({
   cars: true,
-  password: true,
+  password: true
 });
 const UserRelatedSchema = UserSchema.omit({
   comments: true,
   cars: true,
-  address: true,
+  address: true
 });
 const UserLoginSchema = z.object({
   email: z.string(),
-  password: z.string(),
+  password: z.string()
 });
 const UserLoginResponseSchema = z.object({
-  token: z.string(),
+  token: z.string()
 });
 
 const UserUpdateRequestSchema = UserCreateRequestSchema.partial({});
@@ -72,18 +72,18 @@ const UserResponseListCarsSchema = UserSchema.omit({
   password: true,
   reset_password: true,
   address: true,
-  comments: true,
+  comments: true
 }).extend({
   cars: z.array(
     z
       .object({
         user: UserRelatedSchema.omit({
           password: true,
-          reset_password: true,
-        }),
+          reset_password: true
+        })
       })
       .nonstrict()
-  ),
+  )
 });
 
 const UserResponseSchema = UserSchema.omit({
@@ -96,7 +96,7 @@ const UserResponseSchema = UserSchema.omit({
   birthday: true,
   is_seller: true,
   reset_password: true,
-  email: true,
+  email: true
 });
 
 export {
@@ -108,5 +108,5 @@ export {
   UserCreateRequestSchema,
   UserCreateResponseSchema,
   UserUpdateRequestSchema,
-  UserResponseListCarsSchema,
+  UserResponseListCarsSchema
 };

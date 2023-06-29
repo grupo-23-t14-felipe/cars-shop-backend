@@ -4,28 +4,19 @@ import { AppDataSource } from "../../data-source";
 import { User } from "../../entities";
 import AppError from "../../errors/appError";
 import "dotenv/config";
-import {
-  IUserLogin,
-  IUserLoginResponse,
-  IUserRepo,
-} from "../../interfaces/user.interface";
-import {
-  UserCreateResponseSchema,
-  UserLoginResponseSchema,
-} from "../../schemas/users.schemas";
+import { IUserLogin, IUserLoginResponse, IUserRepo } from "../../interfaces/user.interface";
+import { UserCreateResponseSchema, UserLoginResponseSchema } from "../../schemas/users.schemas";
 
-const createSessionService = async (
-  loginData: IUserLogin
-): Promise<IUserLoginResponse> => {
+const createSessionService = async (loginData: IUserLogin): Promise<IUserLoginResponse> => {
   const userRepository: IUserRepo = AppDataSource.getRepository(User);
 
   const user: User | null = await userRepository.findOne({
     where: {
-      email: loginData.email,
+      email: loginData.email
     },
     relations: {
-      address: true,
-    },
+      address: true
+    }
   });
 
   if (!user) {
@@ -42,16 +33,16 @@ const createSessionService = async (
 
   const token: string = jwt.sign(
     {
-      email: userParsed.email,
+      email: userParsed.email
     },
     process.env.SECRET_KEY!,
     {
       expiresIn: process.env.EXPIRES_IN,
-      subject: String(user.uuid),
+      subject: String(user.uuid)
     }
   );
   const data = {
-    token: token,
+    token: token
   };
   const returnData = UserLoginResponseSchema.parse(data);
 

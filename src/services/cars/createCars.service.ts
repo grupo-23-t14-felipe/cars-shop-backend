@@ -1,17 +1,10 @@
 import { AppDataSource } from "../../data-source";
 import { Car, Gallery, User } from "../../entities";
-import {
-  ICarCreate,
-  ICarCreateRequest,
-  ICarRepo,
-} from "../../interfaces/cars.interfaces";
+import { ICarCreate, ICarCreateRequest, ICarRepo } from "../../interfaces/cars.interfaces";
 import { IUserRepo } from "../../interfaces/user.interface";
 import { CarCreateRequestWithotGallerySchema, retrieveCarSchema } from "../../schemas/cars.schemas";
 
-export const createCarService = async (
-  payload: ICarCreateRequest,
-  userUUID: string
-) => {
+export const createCarService = async (payload: ICarCreateRequest, userUUID: string) => {
   const carRepository: ICarRepo = AppDataSource.getRepository(Car);
   const userRepository: IUserRepo = AppDataSource.getRepository(User);
   const galleryRepository = AppDataSource.getRepository(Gallery);
@@ -24,15 +17,14 @@ export const createCarService = async (
   }
 
   const logedUser: User | null = await userRepository.findOneBy({
-    uuid: userUUID,
+    uuid: userUUID
   });
 
-  const newCarInfoParsed =
-    CarCreateRequestWithotGallerySchema.parse(newCarInfo);
+  const newCarInfoParsed = CarCreateRequestWithotGallerySchema.parse(newCarInfo);
 
   const createdCar = carRepository.create({
     ...newCarInfoParsed,
-    user: logedUser!,
+    user: logedUser!
   });
   const savedCar = await carRepository.save(createdCar);
 
@@ -41,7 +33,7 @@ export const createCarService = async (
   for (let i = 0; i < linksGallery.length; i++) {
     const createLinks = galleryRepository.create({
       imageUrl: linksGallery[i],
-      car: savedCar,
+      car: savedCar
     });
     const response = await galleryRepository.save(createLinks);
     results.push(response);
@@ -49,15 +41,14 @@ export const createCarService = async (
 
   const queryBuilder = carRepository.createQueryBuilder("car");
 
-  const carId = savedCar.uuid
+  const carId = savedCar.uuid;
   const car = await queryBuilder
-  .leftJoinAndSelect("car.user", "user")
-  .leftJoinAndSelect("car.gallery", "gallery")
-  .where("car.uuid = :carId", { carId }) 
-  .getOne();
+    .leftJoinAndSelect("car.user", "user")
+    .leftJoinAndSelect("car.gallery", "gallery")
+    .where("car.uuid = :carId", { carId })
+    .getOne();
 
-  const parsedCar = retrieveCarSchema.parse(car)
-  
+  const parsedCar = retrieveCarSchema.parse(car);
+
   return parsedCar;
-
 };

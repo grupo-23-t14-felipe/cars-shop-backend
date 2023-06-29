@@ -7,11 +7,11 @@ const AddressSchema = z.object({
   street: z.string(),
   city: z.string().max(50),
   number: z.string().max(8),
-  complement: z.string().max(20).nullable().optional(),
+  complement: z.string().max(20).nullable().optional()
 });
 
 const AddressCreateSchema = AddressSchema.omit({
-  uuid: true,
+  uuid: true
 });
 
 const AddressUpdateSchema = AddressSchema.partial();

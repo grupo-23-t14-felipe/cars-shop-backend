@@ -10,8 +10,8 @@ export const deleteCommentService = async (commentUUID: string, userUUID: string
     where: {
       uuid: commentUUID
     },
-    relations:{
-      user:true
+    relations: {
+      user: true
     }
   });
 
@@ -24,5 +24,4 @@ export const deleteCommentService = async (commentUUID: string, userUUID: string
   }
 
   await commentRepository.delete(commentUUID);
-
 };

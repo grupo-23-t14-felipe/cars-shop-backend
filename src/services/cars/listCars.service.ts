@@ -1,13 +1,7 @@
-import {
-  ICar,
-  ICarRepo,
-  ICarReturn,
-  ICarlist,
-} from "../../interfaces/cars.interfaces";
+import { ICarRepo, ICarlist } from "../../interfaces/cars.interfaces";
 import { Car } from "../../entities";
 import { AppDataSource } from "../../data-source";
 import { MultipleCarResponseSchema } from "../../schemas/cars.schemas";
-import { parseArgs } from "util";
 
 interface ListCarsFilters {
   fuelType?: string;
@@ -59,7 +53,7 @@ const listCarsService = async (
       valueMin: filterValueMin,
       valueMax: filterValueMax,
       mileageMin: filterMileageMin,
-      mileageMax: filterMileageMax,
+      mileageMax: filterMileageMax
     } = filters;
 
     if (fuelType) {
@@ -73,7 +67,7 @@ const listCarsService = async (
     if (isGoodDeal !== undefined) {
       queryBuilder.andWhere("car.is_good_deal = :isGoodDeal", { isGoodDeal });
       countQueryBuilder.andWhere("car.is_good_deal = :isGoodDeal", {
-        isGoodDeal,
+        isGoodDeal
       });
     }
     if (year) {
@@ -112,7 +106,7 @@ const listCarsService = async (
   const pagination = {
     count: countItem,
     page: page,
-    data: parsedCars,
+    data: parsedCars
   };
 
   return pagination;

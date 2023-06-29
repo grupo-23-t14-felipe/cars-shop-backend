@@ -21,6 +21,8 @@
     "nodemailer": "^6.9.3",
     "pg": "^8.11.0",
     "reflect-metadata": "^0.1.13",
+    "swagger-autogen": "^2.23.4",
+    "swagger-ui-express": "^4.6.3",
     "typeorm": "^0.3.16",
     "zod": "^3.21.4"
   },

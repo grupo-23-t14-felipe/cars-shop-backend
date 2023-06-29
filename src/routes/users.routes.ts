@@ -6,13 +6,10 @@ import {
   sendEmailController,
   retrieveUserController,
   updateAddressController,
-  resetPasswordController,
+  resetPasswordController
 } from "../controllers/users.controllers";
 import { validateDataMdwr } from "../middlewares/validateDataMiddleware";
-import {
-  UserCreateRequestSchema,
-  UserUpdateRequestSchema,
-} from "../schemas/users.schemas";
+import { UserCreateRequestSchema, UserUpdateRequestSchema } from "../schemas/users.schemas";
 import verifyTokenIsValidMiddleware from "../middlewares/session/verifyTokenIsValidMiddleware";
 import { listCarByUserIdController } from "../controllers/users.controllers";
 import { ensureUserUuidExistsMdwr } from "../middlewares/users/ensureUserUuidExists.middleware";
@@ -20,11 +17,8 @@ import { ensureUserHasPermissionMdwr } from "../middlewares/users/ensureUserHasP
 
 export const usersRouter = Router();
 
-usersRouter.post(
-  "",
-  validateDataMdwr(UserCreateRequestSchema),
-  createUserController
-);
+usersRouter.post("", validateDataMdwr(UserCreateRequestSchema), createUserController);
+
 usersRouter.get(
   "/cars/:userUUID",
   verifyTokenIsValidMiddleware,
@@ -62,7 +56,5 @@ usersRouter.patch(
   ensureUserHasPermissionMdwr,
   updateAddressController
 );
-usersRouter.patch(
-  "/reset-password/:randomUUID",
-  resetPasswordController
-);
+
+usersRouter.patch("/reset-password/:randomUUID", resetPasswordController);

@@ -6,7 +6,7 @@ import {
   JoinColumn,
   OneToMany,
   OneToOne,
-  PrimaryGeneratedColumn,
+  PrimaryGeneratedColumn
 } from "typeorm";
 import { Address } from "./address.entity";
 import { Car } from "./cars.entity";
@@ -45,17 +45,17 @@ export class User {
   @Column({ type: "boolean", nullable: true })
   is_seller: boolean | null | undefined;
 
-  @Column({ type: "varchar", nullable: true})
-  reset_password: string | null | undefined
+  @Column({ type: "varchar", nullable: true })
+  reset_password: string | null | undefined;
 
   @OneToOne(() => Address, { cascade: true, onDelete: "CASCADE" })
   @JoinColumn()
   address: Address;
 
-  @OneToMany(() => Car, (car) => car.user,{ cascade: true, onDelete: "CASCADE" })
+  @OneToMany(() => Car, (car) => car.user, { cascade: true, onDelete: "CASCADE" })
   cars: Car[];
 
-  @OneToMany(() => Comment, (comment) => comment.user,{ cascade: true, onDelete: "CASCADE" })
+  @OneToMany(() => Comment, (comment) => comment.user, { cascade: true, onDelete: "CASCADE" })
   comments: Comment[];
 
   @BeforeInsert()

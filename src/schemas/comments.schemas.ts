@@ -16,10 +16,10 @@ const commentCreateSchema = z.object({
 const commentUpdateSchema = commentSchema.partial();
 
 const commentResponse = z.object({
-  description: z.string(), 
-  userId: z.string(), 
-  uuid: z.string(), 
-  carId: z.string() 
+  description: z.string(),
+  userId: z.string(),
+  uuid: z.string(),
+  carId: z.string()
 });
 
 export { commentSchema, commentCreateSchema, commentUpdateSchema, commentResponse };
