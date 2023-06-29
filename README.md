@@ -37,7 +37,7 @@ https://group23-t14-felipe.onrender.com/
 
 Diagrama ER da API definindo bem as relações entre as tabelas do banco de dados.
 
-![DER](der.drawio.png)
+![DER](der.png)
 
 ### 3 - Comandos
 
