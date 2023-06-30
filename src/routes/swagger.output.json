@@ -19,18 +19,7 @@
             "application/json": {
               "schema": {
                 "type": "object",
-                "value": {
-                  "email": "string",
-                  "password": "string"
-                }
-              },
-              "examples": {
-                "success": {
-                  "value": {
-                    "email": "motorsShop@kenzie.com",
-                    "password": "123456@Ab"
-                  }
-                }
+                "$ref": "#/components/schemas/login"
               }
             }
           }
@@ -80,6 +69,16 @@
             "type": "string"
           }
         ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "$ref": "#/components/schemas/announcement"
+              }
+            }
+          }
+        },
         "responses": {
           "201": {
             "description": "OK",
@@ -319,6 +318,16 @@
             "type": "string"
           }
         ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "$ref": "#/components/schemas/announcement"
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "OK",
@@ -484,6 +493,16 @@
             "type": "string"
           }
         ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "$ref": "#/components/schemas/comment"
+              }
+            }
+          }
+        },
         "responses": {
           "201": {
             "description": "Created",
@@ -525,6 +544,16 @@
             "type": "string"
           }
         ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "$ref": "#/components/schemas/comment"
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "Created",
@@ -663,6 +692,16 @@
         "summary": "Create a user",
         "description": "Create a user",
         "tags": ["Users"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "$ref": "#/components/schemas/user"
+              }
+            }
+          }
+        },
         "responses": {
           "201": {
             "description": "Created",
@@ -764,6 +803,20 @@
                 }
               }
             }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "error": {
+                    "value": {
+                      "message": "Sorry, you do not have permission to access this resource."
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       },
@@ -771,6 +824,44 @@
         "summary": "Update a user",
         "description": "Update a user by userUUID",
         "tags": ["Users"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  },
+                  "cpf": {
+                    "type": "string"
+                  },
+                  "celphone": {
+                    "type": "string"
+                  },
+                  "birthday": {
+                    "type": "string"
+                  },
+                  "description": {
+                    "type": "string"
+                  },
+                  "imageUrl": {
+                    "type": "string"
+                  },
+                  "is_seller": {
+                    "type": "boolean"
+                  }
+                }
+              }
+            }
+          }
+        },
         "security": [{ "bearerAuth": [] }],
         "parameters": [
           {
@@ -1016,11 +1107,7 @@
             "in": "body",
             "schema": {
               "type": "object",
-              "properties": {
-                "email": {
-                  "example": "any"
-                }
-              }
+              "$ref": "#/components/schemas/resetPassword"
             }
           }
         ],
@@ -1061,6 +1148,16 @@
         "summary": "Reset Password by token in path",
         "description": "After you send your email to system, and get the link with token",
         "tags": ["Reset Password"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "$ref": "#/components/schemas/resetPassword:token"
+              }
+            }
+          }
+        },
         "parameters": [
           {
             "name": "randomUUID",
@@ -1116,6 +1213,16 @@
         "description": "you can update some field in your address",
         "tags": ["Address"],
         "security": [{ "bearerAuth": [] }],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "$ref": "#/components/schemas/address"
+              }
+            }
+          }
+        },
         "parameters": [
           {
             "name": "userUUID",
@@ -1184,6 +1291,137 @@
     }
   },
   "components": {
+    "schemas": {
+      "user": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          },
+          "cpf": {
+            "type": "string"
+          },
+          "celphone": {
+            "type": "string"
+          },
+          "birthday": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "imageUrl": {
+            "type": "string"
+          },
+          "is_seller": {
+            "type": "boolean"
+          },
+          "address": {
+            "$ref": "#/components/schemas/address"
+          }
+        }
+      },
+      "address": {
+        "type": "object",
+        "properties": {
+          "cep": " string",
+          "state": " string",
+          "street": " string",
+          "city": " string",
+          "number": " string",
+          "complement": " string"
+        }
+      },
+      "login": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string",
+            "format": "password"
+          }
+        }
+      },
+      "announcement": {
+        "type": "object",
+        "properties": {
+          "brand": {
+            "type": "string"
+          },
+          "model": {
+            "type": "string"
+          },
+          "year": {
+            "type": "number"
+          },
+          "fuel_type": {
+            "type": "string"
+          },
+          "mileage": {
+            "type": "number"
+          },
+          "color": {
+            "type": "string"
+          },
+          "img_default": {
+            "type": "string"
+          },
+          "is_good_deal": {
+            "type": "boolean"
+          },
+          "is_active": {
+            "type": "boolean"
+          },
+          "value": {
+            "type": "number"
+          },
+          "description": {
+            "type": "string"
+          },
+          "fipe_price": {
+            "type": "number"
+          },
+          "gallery": {
+            "type": "array",
+            "items": {
+              "field": ["string"]
+            }
+          }
+        }
+      },
+      "comment": {
+        "type": "object",
+        "properties": {
+          "description": {
+            "type": "string"
+          }
+        }
+      },
+      "resetPassword": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          }
+        }
+      },
+      "resetPassword:token": {
+        "type": "object",
+        "properties": {
+          "new_password": {
+            "type": "string"
+          }
+        }
+      }
+    },
     "securitySchemes": {
       "bearerAuth": {
         "type": "http",
