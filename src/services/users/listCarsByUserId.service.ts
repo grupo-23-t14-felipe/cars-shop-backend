@@ -61,6 +61,7 @@ export const listCarByUserIdService = async (
       .leftJoinAndSelect("car.gallery", "g")
       .leftJoinAndSelect("car.user", "user")
       .where("car.is_active = :isActive", { isActive: true })
+      .andWhere("user.uuid = :searchedUserUUID", { searchedUserUUID })
       .skip(offset)
       .take(itemsPerPage)
       .getMany();
