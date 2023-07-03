@@ -40,6 +40,7 @@ export const listCarByUserIdService = async (
       .createQueryBuilder("car")
       .leftJoinAndSelect("car.gallery", "g")
       .leftJoinAndSelect("car.user", "user")
+      .andWhere("user.uuid = :searchedUserUUID", { searchedUserUUID })
       .skip(offset)
       .take(itemsPerPage)
       .getMany();
@@ -53,7 +54,7 @@ export const listCarByUserIdService = async (
     const count = await countQueryBuilder
       .leftJoinAndSelect("car.user", "user")
       .where("user.uuid = :searchedUserUUID", { searchedUserUUID })
-      .andWhere("cars.is_active = :isActive", { isActive: true })
+      .andWhere("car.is_active = :isActive", { isActive: true })
       .getCount();
 
     const cars = await carRepository
@@ -61,6 +62,7 @@ export const listCarByUserIdService = async (
       .leftJoinAndSelect("car.gallery", "g")
       .leftJoinAndSelect("car.user", "user")
       .where("car.is_active = :isActive", { isActive: true })
+      .andWhere("user.uuid = :searchedUserUUID", { searchedUserUUID })
       .skip(offset)
       .take(itemsPerPage)
       .getMany();
