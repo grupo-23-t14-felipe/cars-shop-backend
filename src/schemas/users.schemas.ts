@@ -92,7 +92,6 @@ const UserResponseSchema = UserSchema.omit({
   cars: true,
   address: true,
   cpf: true,
-  celphone: true,
   birthday: true,
   is_seller: true,
   reset_password: true,
