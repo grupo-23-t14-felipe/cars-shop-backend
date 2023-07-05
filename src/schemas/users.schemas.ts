@@ -66,7 +66,7 @@ const UserLoginResponseSchema = z.object({
   token: z.string()
 });
 
-const UserUpdateRequestSchema = UserCreateRequestSchema.partial({});
+const UserUpdateRequestSchema = UserCreateRequestSchema.partial();
 
 const UserResponseListCarsSchema = UserSchema.omit({
   password: true,
