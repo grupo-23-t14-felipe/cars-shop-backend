@@ -47,7 +47,7 @@ const sendEmailService = async (to: string): Promise<any> => {
         button: {
           color: "#DC4D2F",
           text: "Reset your password",
-          link: `http://localhost:3000/resetPassword/${resetToken}`
+          link: `https://cars-shop-frontend.vercel.app/resetPassword/${resetToken}`
         }
       },
       outro: "If you did not request a password reset, no further action is required on your part."
@@ -58,7 +58,7 @@ const sendEmailService = async (to: string): Promise<any> => {
     theme: "default",
     product: {
       name: "M6 T14",
-      link: "http://localhost:3000"
+      link: "https://cars-shop-frontend.vercel.app"
     }
   });
 
